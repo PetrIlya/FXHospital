@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.*;
 
@@ -19,5 +20,10 @@ public class Doctor extends Person {
     public Doctor(@NonNull StringProperty illnessAnalyse, @NonNull Person person) {
         super(person);
         this.illnessAnalyse = illnessAnalyse;
+    }
+
+    public Doctor(@NonNull String illnessAnalyse, Person person) {
+        super(person);
+        this.illnessAnalyse = new SimpleStringProperty(illnessAnalyse);
     }
 }
