@@ -5,7 +5,7 @@ public enum MenuButtonTypes {
     PREVIOUS_PAGE("<"),
     LAST_PAGE(">>"),
     FIRST_PAGE("<<");
-    private String value;
+    private final String value;
 
     public String getValue() {
         return value;

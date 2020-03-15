@@ -51,11 +51,7 @@ public class TableControlMenu {
     }
 
     void configButtons() {
-        this.nextPage.setOnAction(event -> {
-            this.currentPage.getAndIncrement();
-        });
-        this.previousPage.setOnAction(event -> {
-            this.currentPage.getAndDecrement();
-        });
+        this.nextPage.setOnAction(event -> this.currentPage.getAndIncrement());
+        this.previousPage.setOnAction(event -> this.currentPage.getAndDecrement());
     }
 }

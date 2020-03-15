@@ -15,6 +15,10 @@ public final class TableRecordStructureFactory {
                 TableColumnNames.DOCTOR_FULL_NAME.getValue());
         doctorFullName.setCellValueFactory(cell -> cell.getValue().getDoctor().getFullName());
 
+        TableColumn<Record, String> studentAddress = new TableColumn<>(
+                TableColumnNames.ADDRESS.getValue());
+        studentAddress.setCellValueFactory(cell -> cell.getValue().getStudent().getAddress());
+
         TableColumn<Record, Date> studentBirthDate = new TableColumn<>(
                 TableColumnNames.BIRTH_DATE.getValue());
         studentBirthDate.setCellValueFactory(cell -> cell.getValue().getStudent().getBirthDate());
@@ -27,7 +31,7 @@ public final class TableRecordStructureFactory {
                 TableColumnNames.ILLNESS_ANALYSE.getValue());
         doctorConclusion.setCellValueFactory(cell -> cell.getValue().getDoctor().getIllnessAnalyse());
         TableView<Record> records = new TableView<>();
-        records.getColumns().addAll(studentFullName, studentBirthDate, studentIllnessDate, doctorFullName, doctorConclusion);
+        records.getColumns().addAll(studentFullName, studentAddress, studentBirthDate, studentIllnessDate, doctorFullName, doctorConclusion);
         return records;
     }
 }

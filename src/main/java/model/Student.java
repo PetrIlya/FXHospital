@@ -41,10 +41,6 @@ public class Student extends Person {
         this.illnessDate = illnessDate;
     }
 
-    public String getAddress() {
-        return address.get();
-    }
-
     public Student(@NonNull String address,
                    @NonNull Date birthDate,
                    @NonNull Date illnessDate,

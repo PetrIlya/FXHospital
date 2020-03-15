@@ -1,0 +1,166 @@
+package view.form;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import lombok.Getter;
+import lombok.Setter;
+import util.TableColumnNames;
+
+@Getter
+@Setter
+public class Form {
+    private static final String SURNAME = "Surname";
+    private static final String NAME = "Name";
+    private static final String MIDDLE_NAME = "Middle name";
+
+    public static final String EMPTY_STRING = "";
+
+    private VBox dialogContainer;
+
+    private TextField studentSurname;
+    private TextField studentAddress;
+
+    private DatePicker birthDate;
+    private DatePicker illnessDate;
+
+    private TextField doctorSurname;
+    private TextField doctorName;
+    private TextField doctorMiddleName;
+
+    public Form() {
+        this.dialogContainer = new VBox();
+        buildContainer();
+    }
+
+    public void buildContainer() {
+        Label studentSurnameIdtf = new Label(SURNAME);
+        this.studentSurname = new TextField();
+        Label studentAddressIdtf = new Label(TableColumnNames.ADDRESS.getValue());
+        this.studentAddress = new TextField();
+        Label birthDateIdtf = new Label(TableColumnNames.BIRTH_DATE.getValue());
+        this.birthDate = new DatePicker();
+
+        Label illnessDateIdtf = new Label(TableColumnNames.ILLNESS_DATE.getValue());
+        this.illnessDate = new DatePicker();
+        Label doctorNameIdtf = new Label(NAME);
+        this.doctorName = new TextField();
+        Label doctorSurnameIdtf = new Label(SURNAME);
+        this.doctorSurname = new TextField();
+        Label doctorMiddleNameIdtf = new Label(MIDDLE_NAME);
+        this.doctorMiddleName = new TextField();
+        buildBindings();
+        configOptions();
+
+        this.dialogContainer.getChildren().addAll(studentSurnameIdtf, this.studentSurname,
+                studentAddressIdtf, this.studentAddress,
+                birthDateIdtf, this.birthDate,
+                illnessDateIdtf, this.illnessDate,
+                doctorSurnameIdtf, this.doctorSurname,
+                doctorNameIdtf, this.doctorName,
+                doctorMiddleNameIdtf, this.doctorMiddleName);
+    }
+
+    public void buildBindings() {
+        this.enableDoctorNameField = Bindings.createBooleanBinding(() -> {
+                    if (this.doctorSurname.getText().equals(EMPTY_STRING) &&
+                            this.doctorMiddleName.getText().equals(EMPTY_STRING) &&
+                            this.illnessDate.getEditor().getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.doctorName.setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.illnessDate.getEditor().textProperty(),
+                this.doctorSurname.textProperty(),
+                this.doctorMiddleName.textProperty());
+
+        this.enableDoctorSurnameField = Bindings.createBooleanBinding(() -> {
+                    if (this.doctorName.getText().equals(EMPTY_STRING) &&
+                            this.doctorMiddleName.getText().equals(EMPTY_STRING) &&
+                            this.illnessDate.getEditor().getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.doctorSurname.setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.illnessDate.getEditor().textProperty(),
+                this.doctorName.textProperty(),
+                this.doctorMiddleName.textProperty());
+
+        this.enableDoctorMiddleNameField = Bindings.createBooleanBinding(() -> {
+                    if (this.doctorName.getText().equals(EMPTY_STRING) &&
+                            this.doctorSurname.getText().equals(EMPTY_STRING) &&
+                            this.illnessDate.getEditor().getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.doctorMiddleName.setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.illnessDate.getEditor().textProperty(),
+                this.doctorName.textProperty(),
+                this.doctorSurname.textProperty());
+
+        this.enableIllnessDateField = Bindings.createBooleanBinding(() -> {
+                    if (this.doctorName.getText().equals(EMPTY_STRING) &&
+                            this.doctorSurname.getText().equals(EMPTY_STRING) &&
+                            this.doctorMiddleName.getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.illnessDate.getEditor().setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.doctorMiddleName.textProperty(),
+                this.doctorName.textProperty(),
+                this.doctorSurname.textProperty());
+
+        this.enableStudentSurnameField = Bindings.createBooleanBinding(() -> {
+                    if (this.studentAddress.getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.studentSurname.setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.studentAddress.textProperty());
+
+        this.enableAddressField = Bindings.createBooleanBinding(() -> {
+                    if (this.studentSurname.getText().equals(EMPTY_STRING)) {
+                        return false;
+                    } else {
+                        this.studentAddress.setText(EMPTY_STRING);
+                        return true;
+                    }
+                },
+                this.studentSurname.textProperty());
+    }
+
+    public void configOptions() {
+        this.doctorName.disableProperty().bind(enableDoctorNameField);
+        this.doctorSurname.disableProperty().bind(enableDoctorSurnameField);
+        this.doctorMiddleName.disableProperty().bind(enableDoctorMiddleNameField);
+        this.illnessDate.disableProperty().bind(enableIllnessDateField);
+
+        this.studentSurname.disableProperty().bind(enableStudentSurnameField);
+        this.studentAddress.disableProperty().bind(enableAddressField);
+    }
+
+    private BooleanBinding enableDoctorNameField;
+
+    private BooleanBinding enableDoctorSurnameField;
+
+    private BooleanBinding enableDoctorMiddleNameField;
+
+    private BooleanBinding enableIllnessDateField;
+
+    private BooleanBinding enableStudentSurnameField;
+
+    private BooleanBinding enableAddressField;
+}
