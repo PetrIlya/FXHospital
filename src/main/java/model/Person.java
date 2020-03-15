@@ -4,6 +4,7 @@ import javafx.beans.property.StringProperty;
 import lombok.*;
 
 @RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Person {

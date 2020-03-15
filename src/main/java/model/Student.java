@@ -9,10 +9,13 @@ import lombok.NonNull;
 import java.sql.Date;
 
 @AllArgsConstructor
-public class Student extends Person{
-    @NonNull private StringProperty address;
-    @NonNull private ObjectProperty<Date> birthDate;
-    @NonNull private ObjectProperty<Date> illnessDate;
+public class Student extends Person {
+    @NonNull
+    private StringProperty address;
+    @NonNull
+    private ObjectProperty<Date> birthDate;
+    @NonNull
+    private ObjectProperty<Date> illnessDate;
 
     public Student(@NonNull StringProperty surname,
                    @NonNull StringProperty name,
