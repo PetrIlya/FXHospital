@@ -12,6 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Getter
 @Setter
 public class TableControlMenu {
+    private static final Integer DEFAULT_VALUE = 10;
+
     private AtomicInteger currentPage;
     private AtomicInteger recordsPerPageValue;
 
@@ -27,6 +29,13 @@ public class TableControlMenu {
     public TableControlMenu() {
         buildButtons();
         buildTextField();
+
+        this.topContainer = new HBox(
+                firstPage,
+                previousPage,
+                recordsPerPage,
+                nextPage,
+                lastPage);
     }
 
     void buildButtons() {
@@ -37,7 +46,7 @@ public class TableControlMenu {
     }
 
     void buildTextField() {
-        this.recordsPerPage = new TextField(recordsPerPageValue.toString());
+        this.recordsPerPage = new TextField(DEFAULT_VALUE.toString());
         this.recordsPerPage.setTextFormatter(new TextFormatter<String>(change -> {
             String text = change.getText();
             if (text.matches("[1-9][0-9]*")) {
