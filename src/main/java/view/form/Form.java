@@ -2,6 +2,10 @@ package view.form;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.LightBase;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,6 +13,8 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
 import util.TableColumnNames;
+
+import java.util.concurrent.Callable;
 
 @Getter
 @Setter
@@ -22,8 +28,10 @@ public class Form {
     private VBox dialogContainer;
 
     private TextField studentSurname;
-    private TextField studentAddress;
+    private TextField studentName;
+    private TextField studentMiddleName;
 
+    private TextField studentAddress;
     private DatePicker birthDate;
     private DatePicker illnessDate;
 
@@ -31,37 +39,72 @@ public class Form {
     private TextField doctorName;
     private TextField doctorMiddleName;
 
-    public Form() {
+    private TextField illnessAnalyse;
+    private Label illnessAnalyseIdtf;
+
+    private Button actionButton;
+
+    private Label studentSurnameIdtf;
+    private Label studentNameIdtf;
+    private Label studentMiddleNameIdtf;
+
+    private Label studentAddressIdtf;
+    private Label birthDateIdtf;
+    private Label illnessDateIdtf;
+    private Label doctorNameIdtf;
+    private Label doctorSurnameIdtf;
+    private Label doctorMiddleNameIdtf;
+
+    public Form(EventHandler<ActionEvent> eventProcessor, String actionName) {
         this.dialogContainer = new VBox();
+        this.actionButton = new Button(actionName);
+        this.actionButton.setOnAction(eventProcessor);
         buildContainer();
+        this.dialogContainer.getChildren().add(actionButton);
     }
 
     public void buildContainer() {
-        Label studentSurnameIdtf = new Label(SURNAME);
+        this.studentSurnameIdtf = new Label(SURNAME);
         this.studentSurname = new TextField();
-        Label studentAddressIdtf = new Label(TableColumnNames.ADDRESS.getValue());
+
+        this.studentName = new TextField();
+        this.studentNameIdtf = new Label(NAME);
+
+        this.studentMiddleName = new TextField();
+        this.studentMiddleNameIdtf = new Label(MIDDLE_NAME);
+
+        this.studentAddressIdtf = new Label(TableColumnNames.ADDRESS.getValue());
         this.studentAddress = new TextField();
-        Label birthDateIdtf = new Label(TableColumnNames.BIRTH_DATE.getValue());
+        this.birthDateIdtf = new Label(TableColumnNames.BIRTH_DATE.getValue());
         this.birthDate = new DatePicker();
 
-        Label illnessDateIdtf = new Label(TableColumnNames.ILLNESS_DATE.getValue());
+        this.illnessDateIdtf = new Label(TableColumnNames.ILLNESS_DATE.getValue());
         this.illnessDate = new DatePicker();
-        Label doctorNameIdtf = new Label(NAME);
+        this.doctorNameIdtf = new Label(NAME);
         this.doctorName = new TextField();
-        Label doctorSurnameIdtf = new Label(SURNAME);
+        this.doctorSurnameIdtf = new Label(SURNAME);
         this.doctorSurname = new TextField();
-        Label doctorMiddleNameIdtf = new Label(MIDDLE_NAME);
+        this.doctorMiddleNameIdtf = new Label(MIDDLE_NAME);
         this.doctorMiddleName = new TextField();
+
+        this.illnessAnalyseIdtf = new Label(TableColumnNames.ILLNESS_ANALYSE.getValue());
+        this.illnessAnalyse = new TextField();
+
         buildBindings();
         configOptions();
 
-        this.dialogContainer.getChildren().addAll(studentSurnameIdtf, this.studentSurname,
-                studentAddressIdtf, this.studentAddress,
-                birthDateIdtf, this.birthDate,
-                illnessDateIdtf, this.illnessDate,
-                doctorSurnameIdtf, this.doctorSurname,
-                doctorNameIdtf, this.doctorName,
-                doctorMiddleNameIdtf, this.doctorMiddleName);
+        this.dialogContainer.getChildren().addAll(
+                this.studentSurnameIdtf, this.studentSurname,
+                this.studentNameIdtf, this.studentName,
+                this.studentMiddleNameIdtf, this.studentMiddleName,
+                this.studentAddressIdtf, this.studentAddress,
+                this.birthDateIdtf, this.birthDate,
+                this.illnessDateIdtf, this.illnessDate,
+                this.doctorSurnameIdtf, this.doctorSurname,
+                this.doctorNameIdtf, this.doctorName,
+                this.doctorMiddleNameIdtf, this.doctorMiddleName,
+                this.illnessAnalyseIdtf, this.illnessAnalyse
+                );
     }
 
     public void buildBindings() {
@@ -163,4 +206,12 @@ public class Form {
     private BooleanBinding enableStudentSurnameField;
 
     private BooleanBinding enableAddressField;
+
+    public void removeBindings() {
+        this.dialogContainer.getChildren().forEach(child -> {
+            if (!(child instanceof Button)) {
+                child.disableProperty().unbind();
+            }
+        });
+    }
 }

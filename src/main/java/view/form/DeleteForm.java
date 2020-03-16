@@ -4,10 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.VBox;
 
-public class SearchForm extends Form {
-    private static final String ACTION_NAME = "Search";
+public class DeleteForm extends Form {
+    private static final String ACTION_NAME = "Delete";
 
-    public SearchForm(EventHandler<ActionEvent> eventProcessor) {
+    public DeleteForm(EventHandler<ActionEvent> eventProcessor) {
         super(eventProcessor, ACTION_NAME);
         reconfigureForm();
     }

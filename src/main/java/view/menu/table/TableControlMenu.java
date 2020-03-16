@@ -27,7 +27,6 @@ public class TableControlMenu {
     public TableControlMenu() {
         buildButtons();
         buildTextField();
-        configButtons();
     }
 
     void buildButtons() {
@@ -48,10 +47,5 @@ public class TableControlMenu {
                 return null;
             }
         }));
-    }
-
-    void configButtons() {
-        this.nextPage.setOnAction(event -> this.currentPage.getAndIncrement());
-        this.previousPage.setOnAction(event -> this.currentPage.getAndDecrement());
     }
 }
