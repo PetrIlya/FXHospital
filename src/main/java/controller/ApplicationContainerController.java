@@ -1,35 +1,35 @@
 package controller;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import model.Record;
 import util.TableRecordStructureFactory;
 import view.MainContainer;
-import view.menu.MenuBarFactory;
-import view.menu.ToolBarFactory;
+import util.MenuBarFactory;
+import util.ToolBarFactory;
 import view.menu.table.TableControlMenu;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
 public class ApplicationContainerController {
+    public static final int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
 
     private Stage mainWindow;
 
     private MainContainer mainContainer;
 
     private List<Record> records;
-    private IntegerProperty recordsPerPage;
+    private Integer recordsPerPage;
     private List<List<Record>> pages;
 
     public ApplicationContainerController(Stage mainWindow) {
         this.mainWindow = mainWindow;
+        this.records = Collections.emptyList();
+        this.recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
         this.mainContainer = new MainContainer(
                 mainWindow,
                 new TableControlMenu().getTopContainer(),
@@ -37,5 +37,6 @@ public class ApplicationContainerController {
                 MenuBarFactory.getInstance(),
                 TableRecordStructureFactory.buildTableStructure()
                 );
+        this.mainContainer.changeTableContent(records);
     }
 }
