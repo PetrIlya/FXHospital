@@ -67,6 +67,8 @@ public class RecordWriter {
                 student.getName().get());
         element.setAttribute(XMLConstants.STUDENT_MIDDLE_NAME.getValue(),
                 student.getMiddleName().get());
+        element.setAttribute(XMLConstants.ADDRESS.getValue(),
+                student.getAddress().get());
         element.setAttribute(XMLConstants.BIRTH_DATE.getValue(),
                 student.getBirthDate().get().toString());
         element.setAttribute(XMLConstants.ILLNESS_DATE.getValue(),

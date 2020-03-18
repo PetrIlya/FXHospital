@@ -4,6 +4,7 @@ public enum XMLConstants {
     STUDENT_SURNAME("student_surname"),
     STUDENT_NAME("student_name"),
     STUDENT_MIDDLE_NAME("student_middle_name"),
+    ADDRESS("address"),
     BIRTH_DATE("birth_date"),
     ILLNESS_DATE("illness_date"),
 
