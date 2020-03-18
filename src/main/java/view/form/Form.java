@@ -5,11 +5,13 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.LightBase;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import util.TableColumnNames;
@@ -212,5 +214,12 @@ public class Form {
                 child.disableProperty().unbind();
             }
         });
+    }
+
+    public void show() {
+        Stage window = new Stage();
+        Scene root = new Scene(this.dialogContainer);
+        window.setScene(root);
+        window.show();
     }
 }

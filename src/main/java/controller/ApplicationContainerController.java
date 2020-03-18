@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import util.factories.MenuBarFactory;
 import util.factories.ToolBarFactory;
 import view.menu.table.TableControlMenu;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,15 +30,20 @@ public class ApplicationContainerController {
 
     public ApplicationContainerController(Stage mainWindow) {
         this.mainWindow = mainWindow;
-        this.records = Collections.emptyList();
+        this.records = new ArrayList<>();
         this.recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
         this.mainContainer = new MainContainer(
                 mainWindow,
                 new TableControlMenu().getTopContainer(),
-                ToolBarFactory.getInstance(),
+                ToolBarFactory.getInstance(this::addEvent),
                 MenuBarFactory.getInstance(),
                 TableRecordStructureFactory.buildTableStructure()
                 );
         this.mainContainer.changeTableContent(records);
+    }
+
+    public void addEvent(ActionEvent e) {
+        System.out.println("Was here");
+        new AddFormController(records, mainContainer.getRecordTable());
     }
 }

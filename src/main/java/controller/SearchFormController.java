@@ -21,23 +21,17 @@ public class SearchFormController {
     @NonNull private final Stage window;
     @NonNull private final Scene scene;
     @NonNull private final SearchForm form;
-    @NonNull private final TableView<Record> recordTable;
+    private TableView<Record> recordTable;
 
     private List<Record> currentTableRecords = Collections.emptyList();
 
     public SearchFormController(@NonNull List<Record> records,
                                 @NonNull Stage window,
                                 @NonNull Scene scene,
-                                @NonNull SearchForm form,
-                                @NonNull TableView<Record> recordTable) {
+                                @NonNull SearchForm form) {
         this.records = records;
         this.window = window;
         this.scene = scene;
         this.form = form;
-        this.recordTable = recordTable;
     }
-
-    private final EventHandler<ActionEvent> searchEvent = e -> {
-
-    };
 }
