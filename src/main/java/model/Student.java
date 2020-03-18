@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
@@ -15,16 +15,16 @@ public class Student extends Person {
     @NonNull
     private StringProperty address;
     @NonNull
-    private ObjectProperty<Date> birthDate;
+    private ObjectProperty<LocalDate> birthDate;
     @NonNull
-    private ObjectProperty<Date> illnessDate;
+    private ObjectProperty<LocalDate> illnessDate;
 
     public Student(@NonNull StringProperty surname,
                    @NonNull StringProperty name,
                    @NonNull StringProperty middleName,
                    @NonNull StringProperty address,
-                   @NonNull ObjectProperty<Date> birthDate,
-                   @NonNull ObjectProperty<Date> illnessDate) {
+                   @NonNull ObjectProperty<LocalDate> birthDate,
+                   @NonNull ObjectProperty<LocalDate> illnessDate) {
         super(surname, name, middleName);
         this.address = address;
         this.birthDate = birthDate;
@@ -32,8 +32,8 @@ public class Student extends Person {
     }
 
     public Student(@NonNull StringProperty address,
-                   @NonNull ObjectProperty<Date> birthDate,
-                   @NonNull ObjectProperty<Date> illnessDate,
+                   @NonNull ObjectProperty<LocalDate> birthDate,
+                   @NonNull ObjectProperty<LocalDate> illnessDate,
                    @NonNull Person person) {
         super(person);
         this.address = address;
@@ -42,8 +42,8 @@ public class Student extends Person {
     }
 
     public Student(@NonNull String address,
-                   @NonNull Date birthDate,
-                   @NonNull Date illnessDate,
+                   @NonNull LocalDate birthDate,
+                   @NonNull LocalDate illnessDate,
                    @NonNull Person person) {
         super(person);
         this.address = new SimpleStringProperty(address);

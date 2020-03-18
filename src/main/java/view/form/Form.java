@@ -14,8 +14,6 @@ import lombok.Getter;
 import lombok.Setter;
 import util.TableColumnNames;
 
-import java.util.concurrent.Callable;
-
 @Getter
 @Setter
 public class Form {
@@ -104,7 +102,7 @@ public class Form {
                 this.doctorNameIdtf, this.doctorName,
                 this.doctorMiddleNameIdtf, this.doctorMiddleName,
                 this.illnessAnalyseIdtf, this.illnessAnalyse
-                );
+        );
     }
 
     public void buildBindings() {
@@ -186,6 +184,7 @@ public class Form {
     }
 
     public void configOptions() {
+
         this.doctorName.disableProperty().bind(enableDoctorNameField);
         this.doctorSurname.disableProperty().bind(enableDoctorSurnameField);
         this.doctorMiddleName.disableProperty().bind(enableDoctorMiddleNameField);

@@ -12,8 +12,9 @@ import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
 
+import java.util.List;
+
 @Getter
-@Setter
 public class MainContainer {
     @NonNull private final BorderPane mainContainer;
     @NonNull private final HBox tableMenuContainer;
@@ -38,5 +39,11 @@ public class MainContainer {
 
         mainWindow.setScene(new Scene(this.mainContainer));
         mainWindow.show();
+
+    }
+
+    public void changeTableContent(List<Record> records) {
+        this.recordTable.getItems().clear();
+        records.forEach(this.recordTable.getItems()::add);
     }
 }

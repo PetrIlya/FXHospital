@@ -3,8 +3,7 @@ package util;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Record;
-
-import java.sql.Date;
+import java.time.LocalDate;
 
 public final class TableRecordStructureFactory {
     public static TableView<Record> buildTableStructure() {
@@ -19,11 +18,11 @@ public final class TableRecordStructureFactory {
                 TableColumnNames.ADDRESS.getValue());
         studentAddress.setCellValueFactory(cell -> cell.getValue().getStudent().getAddress());
 
-        TableColumn<Record, Date> studentBirthDate = new TableColumn<>(
+        TableColumn<Record, LocalDate> studentBirthDate = new TableColumn<>(
                 TableColumnNames.BIRTH_DATE.getValue());
         studentBirthDate.setCellValueFactory(cell -> cell.getValue().getStudent().getBirthDate());
 
-        TableColumn<Record, Date> studentIllnessDate = new TableColumn<>(
+        TableColumn<Record, LocalDate> studentIllnessDate = new TableColumn<>(
                 TableColumnNames.ILLNESS_DATE.getValue());
         studentIllnessDate.setCellValueFactory(cell -> cell.getValue().getStudent().getIllnessDate());
 
@@ -31,7 +30,13 @@ public final class TableRecordStructureFactory {
                 TableColumnNames.ILLNESS_ANALYSE.getValue());
         doctorConclusion.setCellValueFactory(cell -> cell.getValue().getDoctor().getIllnessAnalyse());
         TableView<Record> records = new TableView<>();
-        records.getColumns().addAll(studentFullName, studentAddress, studentBirthDate, studentIllnessDate, doctorFullName, doctorConclusion);
+        records.getColumns().addAll(
+                studentFullName,
+                studentAddress,
+                studentBirthDate,
+                studentIllnessDate,
+                doctorFullName,
+                doctorConclusion);
         return records;
     }
 }

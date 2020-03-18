@@ -47,14 +47,5 @@ public class TableControlMenu {
 
     void buildTextField() {
         this.recordsPerPage = new TextField(DEFAULT_VALUE.toString());
-        this.recordsPerPage.setTextFormatter(new TextFormatter<String>(change -> {
-            String text = change.getText();
-            if (text.matches("[1-9][0-9]*")) {
-                this.recordsPerPageValue.set(Integer.parseInt(text));
-                return change;
-            } else {
-                return null;
-            }
-        }));
     }
 }
