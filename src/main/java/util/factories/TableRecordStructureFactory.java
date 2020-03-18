@@ -1,8 +1,10 @@
-package util;
+package util.factories;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Record;
+import util.TableColumnNames;
+
 import java.time.LocalDate;
 
 public final class TableRecordStructureFactory {

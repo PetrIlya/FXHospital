@@ -1,4 +1,4 @@
-package util;
+package util.factories;
 
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;

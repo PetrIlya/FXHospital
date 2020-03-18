@@ -4,10 +4,10 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import model.Record;
-import util.TableRecordStructureFactory;
+import util.factories.TableRecordStructureFactory;
 import view.MainContainer;
-import util.MenuBarFactory;
-import util.ToolBarFactory;
+import util.factories.MenuBarFactory;
+import util.factories.ToolBarFactory;
 import view.menu.table.TableControlMenu;
 
 import java.util.Collections;

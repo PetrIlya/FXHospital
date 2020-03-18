@@ -1,4 +1,4 @@
-package util;
+package util.factories;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
