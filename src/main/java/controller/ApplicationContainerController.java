@@ -6,7 +6,9 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import model.Record;
+import org.xml.sax.SAXException;
 import util.factories.table.TableRecordStructureFactory;
+import util.xml.RecordReader;
 import util.xml.RecordWriter;
 import view.MainContainer;
 import util.factories.MenuBarFactory;
@@ -15,6 +17,7 @@ import view.menu.table.PageableTable;
 import view.menu.table.TableControlMenu;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +47,7 @@ public class ApplicationContainerController {
         this.mainContainer = new MainContainer(
                 mainWindow,
                 MenuBarFactory.getInstance(),
-                ToolBarFactory.getInstance(this::addEvent, this::saveEvent),
+                ToolBarFactory.getInstance(this::addEvent, this::saveEvent, this::loadEvent),
                 records);
     }
 
@@ -64,6 +67,26 @@ public class ApplicationContainerController {
             } catch (IOException | ParserConfigurationException | TransformerException ex) {
                 ex.printStackTrace();
             }
+        }
+    }
+
+    public void loadEvent(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load");
+
+        File fileToLoad = fileChooser.showOpenDialog(this.mainWindow);
+
+        if (fileToLoad != null) {
+            RecordReader loader = new RecordReader();
+            try {
+                SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad, loader);
+
+                this.records.clear();
+                this.records.addAll(loader.getRecords());
+            } catch (SAXException | IOException | ParserConfigurationException ex) {
+                ex.printStackTrace();
+            }
+            this.mainContainer.getPageableTable().hardUpdate();
         }
     }
 }

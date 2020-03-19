@@ -45,7 +45,12 @@ public class PageableTable {
 
     public final void update() {
         this.table.getItems().clear();
-        pages.get(this.currentPage).forEach(this.table.getItems()::add);
+        this.pages.get(this.currentPage).forEach(this.table.getItems()::add);
+    }
+
+    public void hardUpdate() {
+        this.pages = Lists.partition(records, recordsPerPage);
+        update();
     }
 
     private void nextPageEvent(ActionEvent e) {

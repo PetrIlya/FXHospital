@@ -52,7 +52,7 @@ public class TableControlMenu {
         this.firstPage.setOnAction(firstPageEvent);
     }
 
-    void buildTextField() {
+    private void buildTextField() {
         this.recordsPerPage = new TextField("1");
     }
 }

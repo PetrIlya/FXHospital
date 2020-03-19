@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class RecordReader extends DefaultHandler {
 
     @Override
     public void startDocument() throws SAXException {
-        this.records = Collections.emptyList();
+        this.records = new ArrayList<>();
     }
 
     @Override
