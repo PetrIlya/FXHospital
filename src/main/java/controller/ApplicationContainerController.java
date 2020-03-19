@@ -5,28 +5,31 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import model.Record;
-import util.factories.TableRecordStructureFactory;
+import util.factories.table.TableRecordStructureFactory;
 import view.MainContainer;
 import util.factories.MenuBarFactory;
 import util.factories.ToolBarFactory;
+import view.menu.table.PageableTable;
 import view.menu.table.TableControlMenu;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
 public class ApplicationContainerController {
     public static final int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
+    public static final int DEFAULT_PAGE = 0;
 
     private Stage mainWindow;
 
     private MainContainer mainContainer;
 
     private List<Record> records;
-    private Integer recordsPerPage;
+
     private List<List<Record>> pages;
+    private Integer recordsPerPage;
+    private Integer currentPage;
 
     public ApplicationContainerController(Stage mainWindow) {
         this.mainWindow = mainWindow;
@@ -34,16 +37,12 @@ public class ApplicationContainerController {
         this.recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
         this.mainContainer = new MainContainer(
                 mainWindow,
-                new TableControlMenu().getTopContainer(),
-                ToolBarFactory.getInstance(this::addEvent),
                 MenuBarFactory.getInstance(),
-                TableRecordStructureFactory.buildTableStructure()
-                );
-        this.mainContainer.changeTableContent(records);
+                ToolBarFactory.getInstance(this::addEvent),
+                records);
     }
 
     public void addEvent(ActionEvent e) {
-        System.out.println("Was here");
-        new AddFormController(records, mainContainer.getRecordTable());
+        new AddFormController(records, mainContainer.getPageableTable().getTable());
     }
 }

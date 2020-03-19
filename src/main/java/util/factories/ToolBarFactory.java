@@ -49,11 +49,11 @@ public class ToolBarFactory {
     }
 
     private static void generateButtons(ToolBar bar, EventHandler<ActionEvent> addHandler) {
-        Button add = new Button();
-        add.setOnAction(addHandler);
-        add.setGraphic(new ImageView("image/add.png"));
+        Button add = ButtonFactory.buttonBuilder(addHandler, new ImageView("image/add.png"));
+
         Button delete = new Button();
         delete.setGraphic(new ImageView("image/delete.png"));
+
         Button search = new Button();
         search.setGraphic(new ImageView("image/search.png"));
         Button load = new Button();

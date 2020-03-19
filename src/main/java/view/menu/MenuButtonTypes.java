@@ -1,4 +1,4 @@
-package view.menu.table;
+package view.menu;
 
 public enum MenuButtonTypes {
     NEXT_PAGE(">"),

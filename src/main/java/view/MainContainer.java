@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
+import util.factories.table.TableRecordStructureFactory;
+import view.menu.table.PageableTable;
 
 import java.util.List;
 
@@ -22,24 +24,17 @@ public class MainContainer {
     @NonNull
     private final BorderPane mainContainer;
     @NonNull
-    private final HBox tableMenuContainer;
+    private final PageableTable pageableTable;
     @NonNull
     private final ToolBar toolBarContainer;
     @NonNull
     private final MenuBar menuBarContainer;
-    @NonNull
-    private final TableView<Record> recordTable;
 
     public MainContainer(Stage mainWindow,
-                         HBox tableMenuContainer,
-                         ToolBar toolBarContainer,
-                         MenuBar menuBarContainer,
-                         TableView<Record> recordTable) {
-
-        this.tableMenuContainer = tableMenuContainer;
+                         MenuBar menuBarContainer, ToolBar toolBarContainer, List<Record> records) {
         this.toolBarContainer = toolBarContainer;
         this.menuBarContainer = menuBarContainer;
-        this.recordTable = recordTable;
+        this.pageableTable = new PageableTable(TableRecordStructureFactory.buildTableStructure(), records);
 
         this.mainContainer = new BorderPane();
         configContainer();
@@ -53,12 +48,6 @@ public class MainContainer {
     private void configContainer() {
         this.mainContainer.setTop(this.menuBarContainer);
         this.mainContainer.setLeft(this.toolBarContainer);
-        this.mainContainer.setBottom(this.tableMenuContainer);
-        this.mainContainer.setCenter(this.recordTable);
-    }
-
-    public void changeTableContent(List<Record> records) {
-        this.recordTable.getItems().clear();
-        records.forEach(this.recordTable.getItems()::add);
+        this.mainContainer.setCenter(this.pageableTable.getTopContainer());
     }
 }

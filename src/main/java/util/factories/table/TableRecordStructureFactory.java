@@ -1,4 +1,4 @@
-package util.factories;
+package util.factories.table;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
