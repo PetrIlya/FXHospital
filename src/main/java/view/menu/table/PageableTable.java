@@ -1,23 +1,21 @@
 package view.menu.table;
 
-import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import controller.ApplicationContainerController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
 
 import java.util.List;
-import java.util.Spliterators;
 
 @Getter
 @Setter
 public class PageableTable {
-    private final HBox topContainer;
+    private final VBox topContainer;
 
     @NonNull
     private final List<Record> records;
@@ -31,7 +29,7 @@ public class PageableTable {
     private int currentPage;
 
     public PageableTable(@NonNull TableView<Record> table, @NonNull List<Record> records) {
-        this.topContainer = new HBox();
+        this.topContainer = new VBox();
         this.table = table;
         this.records = records;
         this.tableControlMenu = new TableControlMenu(
@@ -45,28 +43,28 @@ public class PageableTable {
         this.pages = Lists.partition(records, recordsPerPage);
     }
 
-    public final void changeCurrentPage() {
+    public final void update() {
         this.table.getItems().clear();
         pages.get(this.currentPage).forEach(this.table.getItems()::add);
     }
 
     private void nextPageEvent(ActionEvent e) {
         this.currentPage++;
-        changeCurrentPage();
+        update();
     }
 
     private void previousPageEvent(ActionEvent e) {
         this.currentPage--;
-        changeCurrentPage();
+        update();
     }
 
     private void firstPageEvent(ActionEvent e) {
         this.currentPage = 0;
-        changeCurrentPage();
+        update();
     }
 
     private void lastPageEvent(ActionEvent e) {
         this.currentPage = pages.size() - 1;
-        changeCurrentPage();
+        update();
     }
 }

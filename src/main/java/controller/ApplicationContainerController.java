@@ -43,6 +43,6 @@ public class ApplicationContainerController {
     }
 
     public void addEvent(ActionEvent e) {
-        new AddFormController(records, mainContainer.getPageableTable().getTable());
+        new AddFormController(records, mainContainer.getPageableTable());
     }
 }
