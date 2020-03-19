@@ -1,17 +1,23 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 import model.Record;
 import util.factories.table.TableRecordStructureFactory;
+import util.xml.RecordWriter;
 import view.MainContainer;
 import util.factories.MenuBarFactory;
 import util.factories.ToolBarFactory;
 import view.menu.table.PageableTable;
 import view.menu.table.TableControlMenu;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +44,26 @@ public class ApplicationContainerController {
         this.mainContainer = new MainContainer(
                 mainWindow,
                 MenuBarFactory.getInstance(),
-                ToolBarFactory.getInstance(this::addEvent),
+                ToolBarFactory.getInstance(this::addEvent, this::saveEvent),
                 records);
     }
 
     public void addEvent(ActionEvent e) {
         new AddFormController(records, mainContainer.getPageableTable());
+    }
+
+    public void saveEvent(ActionEvent e) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save");
+        File fileToSave = fileChooser.showSaveDialog(mainWindow);
+
+        if (fileToSave != null) {
+            RecordWriter writer = new RecordWriter(fileToSave, records);
+            try {
+                writer.write();
+            } catch (IOException | ParserConfigurationException | TransformerException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

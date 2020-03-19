@@ -45,6 +45,8 @@ public class RecordWriter {
         this.root = document.createElement(XMLConstants.RECORDS.getValue());
         this.records.stream().map(transformRecordToElement).forEach(this.root::appendChild);
 
+        this.document.appendChild(root);
+
         TransformerFactory.newInstance().newTransformer().
                 transform(new DOMSource(this.document),
                         new StreamResult(this.file));
