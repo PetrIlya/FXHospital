@@ -64,27 +64,27 @@ public class RecordWriter {
 
     public void transformStudent(Element element, Student student) {
         element.setAttribute(XMLConstants.STUDENT_SURNAME.getValue(),
-                student.getSurname().get());
+                student.getSurname());
         element.setAttribute(XMLConstants.STUDENT_NAME.getValue(),
-                student.getName().get());
+                student.getName());
         element.setAttribute(XMLConstants.STUDENT_MIDDLE_NAME.getValue(),
-                student.getMiddleName().get());
+                student.getMiddleName());
         element.setAttribute(XMLConstants.ADDRESS.getValue(),
-                student.getAddress().get());
+                student.getAddress());
         element.setAttribute(XMLConstants.BIRTH_DATE.getValue(),
-                student.getBirthDate().get().toString());
+                student.getBirthDate().toString());
         element.setAttribute(XMLConstants.ILLNESS_DATE.getValue(),
-                student.getIllnessDate().get().toString());
+                student.getIllnessDate().toString());
     }
 
     public void transformDoctor(Element element, Doctor doctor) {
         element.setAttribute(XMLConstants.DOCTOR_SURNAME.getValue(),
-                doctor.getSurname().get());
+                doctor.getSurname());
         element.setAttribute(XMLConstants.DOCTOR_NAME.getValue(),
-                doctor.getName().get());
+                doctor.getName());
         element.setAttribute(XMLConstants.DOCTOR_MIDDLE_NAME.getValue(),
-                doctor.getMiddleName().get());
+                doctor.getMiddleName());
         element.setAttribute(XMLConstants.ILLNESS_ANALYSES.getValue(),
-                doctor.getIllnessAnalyse().get());
+                doctor.getIllnessAnalyse());
     }
 }

@@ -1,5 +1,7 @@
 package util.factories.table;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Record;
@@ -18,19 +20,19 @@ public final class TableRecordStructureFactory {
 
         TableColumn<Record, String> studentAddress = new TableColumn<>(
                 TableColumnNames.ADDRESS.getValue());
-        studentAddress.setCellValueFactory(cell -> cell.getValue().getStudent().getAddress());
+        studentAddress.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStudent().getAddress()));
 
         TableColumn<Record, LocalDate> studentBirthDate = new TableColumn<>(
                 TableColumnNames.BIRTH_DATE.getValue());
-        studentBirthDate.setCellValueFactory(cell -> cell.getValue().getStudent().getBirthDate());
+        studentBirthDate.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getStudent().getBirthDate()));
 
         TableColumn<Record, LocalDate> studentIllnessDate = new TableColumn<>(
                 TableColumnNames.ILLNESS_DATE.getValue());
-        studentIllnessDate.setCellValueFactory(cell -> cell.getValue().getStudent().getIllnessDate());
+        studentIllnessDate.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getStudent().getIllnessDate()));
 
         TableColumn<Record, String> doctorConclusion = new TableColumn<>(
                 TableColumnNames.ILLNESS_ANALYSE.getValue());
-        doctorConclusion.setCellValueFactory(cell -> cell.getValue().getDoctor().getIllnessAnalyse());
+        doctorConclusion.setCellValueFactory(cell -> new SimpleObjectProperty<>(cell.getValue().getDoctor().getIllnessAnalyse()));
         TableView<Record> records = new TableView<>();
         records.getColumns().addAll(
                 studentFullName,

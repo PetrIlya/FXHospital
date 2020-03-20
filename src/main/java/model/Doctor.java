@@ -7,23 +7,10 @@ import lombok.*;
 @Getter
 @Setter
 public class Doctor extends Person {
-    @NonNull private StringProperty illnessAnalyse;
-
-    public Doctor(@NonNull StringProperty surname,
-                  @NonNull StringProperty name,
-                  @NonNull StringProperty middleName,
-                  @NonNull StringProperty illnessAnalyse) {
-        super(surname, name, middleName);
-        this.illnessAnalyse = illnessAnalyse;
-    }
-
-    public Doctor(@NonNull StringProperty illnessAnalyse, @NonNull Person person) {
-        super(person);
-        this.illnessAnalyse = illnessAnalyse;
-    }
+    @NonNull private String illnessAnalyse;
 
     public Doctor(@NonNull String illnessAnalyse, Person person) {
         super(person);
-        this.illnessAnalyse = new SimpleStringProperty(illnessAnalyse);
+        this.illnessAnalyse = illnessAnalyse;
     }
 }

@@ -4,22 +4,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.*;
 
-@RequiredArgsConstructor
+@Data
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
 public class Person {
-    @NonNull private StringProperty surname;
-    @NonNull private StringProperty name;
-    @NonNull private StringProperty middleName;
-
-    public Person(String surname,
-                  String name,
-                  String middleName) {
-        this.surname = new SimpleStringProperty(surname);
-        this.name = new SimpleStringProperty(name);
-        this.middleName = new SimpleStringProperty(middleName);
-    }
+    private String surname;
+    private String name;
+    private String middleName;
 
     public Person(Person person) {
         this.surname = person.getSurname();
@@ -28,8 +19,8 @@ public class Person {
     }
 
     public StringProperty getFullName() {
-        return new SimpleStringProperty(surname.get() + " " +
-                name.get() + " " +
-                middleName.get());
+        return new SimpleStringProperty(surname + " " +
+                name + " " +
+                middleName);
     }
 }

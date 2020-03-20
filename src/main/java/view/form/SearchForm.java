@@ -26,21 +26,4 @@ public class SearchForm extends Form {
         return false;
     }
 
-    private boolean firstStageCheck(Record record) {
-        String data = super.getStudentSurname().getText();
-        if (!data.equals(EMPTY_STRING)) {
-            if (data.equals(record.getStudent().getBirthDate().get())) {
-                return false;
-            }
-        } else {
-            data = super.getStudentAddress().getText();
-            if (!data.equals(EMPTY_STRING)) {
-                if (!record.getStudent().getAddress().get().equals(data)) {
-                    return false;
-                }
-            }
-        }
-
-        return false;
-    }
 }
