@@ -9,7 +9,10 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
+import util.factories.table.TableRecordStructureFactory;
+import view.form.AddForm;
 import view.form.SearchForm;
+import view.menu.table.PageableTable;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,20 +21,20 @@ import java.util.List;
 @Setter
 public class SearchFormController {
     @NonNull private final List<Record> records;
-    @NonNull private final Stage window;
-    @NonNull private final Scene scene;
-    @NonNull private final SearchForm form;
-    private TableView<Record> recordTable;
+    @NonNull
+    private final SearchForm form;
+    @NonNull
+    private PageableTable table;
 
     private List<Record> currentTableRecords = Collections.emptyList();
 
-    public SearchFormController(@NonNull List<Record> records,
-                                @NonNull Stage window,
-                                @NonNull Scene scene,
-                                @NonNull SearchForm form) {
+    public SearchFormController(@NonNull List<Record> records) {
         this.records = records;
-        this.window = window;
-        this.scene = scene;
-        this.form = form;
+        this.form = new SearchForm(null);
+    }
+
+    private void processSearchEvent(ActionEvent e) {
+        //TODO: Add implementation
+        this.form.meetsSearchRequirements(null);
     }
 }
