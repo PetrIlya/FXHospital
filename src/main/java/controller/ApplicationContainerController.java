@@ -7,14 +7,11 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Record;
 import org.xml.sax.SAXException;
-import util.factories.table.TableRecordStructureFactory;
 import util.xml.RecordReader;
 import util.xml.RecordWriter;
 import view.MainContainer;
 import util.factories.MenuBarFactory;
 import util.factories.ToolBarFactory;
-import view.menu.table.PageableTable;
-import view.menu.table.TableControlMenu;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -47,12 +44,16 @@ public class ApplicationContainerController {
         this.mainContainer = new MainContainer(
                 mainWindow,
                 MenuBarFactory.getInstance(),
-                ToolBarFactory.getInstance(this::addEvent, this::saveEvent, this::loadEvent),
+                ToolBarFactory.getInstance(this::addEvent, this::saveEvent, this::loadEvent, this::searchEvent),
                 records);
     }
 
     public void addEvent(ActionEvent e) {
         new AddFormController(records, mainContainer.getPageableTable());
+    }
+
+    public void searchEvent(ActionEvent e) {
+        new SearchFormController(records);
     }
 
     public void saveEvent(ActionEvent e) {

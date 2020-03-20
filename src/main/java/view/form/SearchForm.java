@@ -3,15 +3,29 @@ package view.form;
 import exceptions.StageElementIsEmptyException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 import model.Doctor;
 import model.Record;
+import view.table.PageableTable;
 
+@Getter
+@Setter
 public class SearchForm extends Form {
     private static final String ACTION_NAME = "Search";
+    @NonNull
+    private final PageableTable table;
+    private final HBox topContainer;
 
-    public SearchForm(EventHandler<ActionEvent> eventProcessor) {
+    public SearchForm(EventHandler<ActionEvent> eventProcessor, @NonNull PageableTable table) {
         super(eventProcessor, ACTION_NAME);
+        this.table = table;
+        this.topContainer = new HBox();
         reconfigureForm();
     }
 
@@ -21,6 +35,7 @@ public class SearchForm extends Form {
                 super.getIllnessAnalyse(), super.getIllnessAnalyseIdtf(),
                 super.getStudentMiddleName(), super.getStudentMiddleNameIdtf(),
                 super.getStudentName(), super.getStudentNameIdtf());
+        this.topContainer.getChildren().addAll(super.getDialogContainer(), this.table.getTopContainer());
     }
 
     public boolean meetsSearchRequirements(Record record) {
@@ -132,12 +147,9 @@ public class SearchForm extends Form {
             if (getDoctorNameEquality(record.getDoctor())) {
                 return true;
             } else {
-                if (this.getIllnessDate().getValue().equals(record.getStudent().getIllnessDate())) {
-                    return true;
-                }
+                return this.getIllnessDate().getValue().equals(record.getStudent().getIllnessDate());
             }
         }
-        return false;
     }
 
     private boolean getDoctorNameEquality(Doctor doctor) {
@@ -147,11 +159,16 @@ public class SearchForm extends Form {
             if (doctor.getName().equals(this.getDoctorName().getText())) {
                 return true;
             } else {
-                if (doctor.getMiddleName().equals(this.getDoctorMiddleName().getText())) {
-                    return true;
-                }
+                return doctor.getMiddleName().equals(this.getDoctorMiddleName().getText());
             }
         }
-        return false;
+    }
+
+    @Override
+    public void show() {
+        Stage window = new Stage();
+        Scene root = new Scene(this.topContainer);
+        window.setScene(root);
+        window.show();
     }
 }

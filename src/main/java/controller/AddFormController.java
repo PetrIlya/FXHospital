@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
 import view.form.AddForm;
-import view.menu.table.PageableTable;
+import view.table.PageableTable;
 
 import java.util.List;
 

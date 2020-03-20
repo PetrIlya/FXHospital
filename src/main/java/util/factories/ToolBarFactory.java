@@ -43,26 +43,28 @@ public class ToolBarFactory {
 
     public static ToolBar getInstance(EventHandler<ActionEvent> addHandler,
                                       EventHandler<ActionEvent> saveEvent,
-                                      EventHandler<ActionEvent> loadEvent) {
+                                      EventHandler<ActionEvent> loadEvent,
+                                      EventHandler<ActionEvent> searchEvent) {
         ToolBar bar = new ToolBar();
         bar.setOrientation(Orientation.VERTICAL);
         generateButtons(bar,
                 addHandler,
                 saveEvent,
-                loadEvent);
+                loadEvent,
+                searchEvent);
         return bar;
     }
 
     private static void generateButtons(ToolBar bar,
                                         EventHandler<ActionEvent> addHandler,
                                         EventHandler<ActionEvent> saveEvent,
-                                        EventHandler<ActionEvent> loadEvent) {
+                                        EventHandler<ActionEvent> loadEvent,
+                                        EventHandler<ActionEvent> searchEvent) {
         Button add = ButtonFactory.buttonBuilder(addHandler, new ImageView("image/add.png"));
+
         Button delete = ButtonFactory.buttonBuilder(null, new ImageView("image/delete.png"));
 
-        Button search = new Button();
-        search.setGraphic(new ImageView("image/search.png"));
-
+        Button search = ButtonFactory.buttonBuilder(searchEvent, new ImageView("image/search.png"));
         Button load = ButtonFactory.buttonBuilder(loadEvent, new ImageView("image/load.png"));
         Button save = ButtonFactory.buttonBuilder(saveEvent, new ImageView("/image/save.png"));
         bar.getItems().addAll(add,

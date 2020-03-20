@@ -9,7 +9,7 @@ import util.TableColumnNames;
 
 import java.time.LocalDate;
 
-public final class TableRecordStructureFactory {
+public final class TableStructureFactory {
     public static TableView<Record> buildTableStructure() {
         TableColumn<Record, String> studentFullName = new TableColumn<>(
                 TableColumnNames.STUDENT_FULL_NAME.getValue());

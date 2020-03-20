@@ -8,7 +8,6 @@ import model.Person;
 import model.Record;
 import model.Student;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AddForm extends Form {

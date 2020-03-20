@@ -1,4 +1,4 @@
-package view.menu.table;
+package view.table;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

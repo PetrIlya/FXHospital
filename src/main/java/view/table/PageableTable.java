@@ -1,4 +1,4 @@
-package view.menu.table;
+package view.table;
 
 import com.google.common.collect.Lists;
 import controller.ApplicationContainerController;
@@ -49,6 +49,13 @@ public class PageableTable {
     }
 
     public void hardUpdate() {
+        this.pages = Lists.partition(records, recordsPerPage);
+        update();
+    }
+
+    public void hardUpdate(List<Record> content) {
+        this.records.clear();
+        this.records.addAll(content);
         this.pages = Lists.partition(records, recordsPerPage);
         update();
     }

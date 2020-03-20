@@ -2,17 +2,15 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
-import util.factories.table.TableRecordStructureFactory;
-import view.menu.table.PageableTable;
+import util.factories.table.TableStructureFactory;
+import view.table.PageableTable;
 
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class MainContainer {
                          MenuBar menuBarContainer, ToolBar toolBarContainer, List<Record> records) {
         this.toolBarContainer = toolBarContainer;
         this.menuBarContainer = menuBarContainer;
-        this.pageableTable = new PageableTable(TableRecordStructureFactory.buildTableStructure(), records);
+        this.pageableTable = new PageableTable(TableStructureFactory.buildTableStructure(), records);
 
         this.mainContainer = new BorderPane();
         configContainer();
