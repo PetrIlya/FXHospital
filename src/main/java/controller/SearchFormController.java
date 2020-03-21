@@ -10,7 +10,6 @@ import view.form.SearchForm;
 import view.table.PageableTable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -23,8 +22,6 @@ public class SearchFormController {
     private final SearchForm form;
     @NonNull
     private PageableTable table;
-
-    private List<Record> currentTableRecords = Collections.emptyList();
 
     public SearchFormController(@NonNull List<Record> records) {
         this.records = records;

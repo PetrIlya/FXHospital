@@ -1,7 +1,6 @@
 package view.table;
 
 import com.google.common.collect.Lists;
-import controller.ApplicationContainerController;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
@@ -15,11 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 public class PageableTable {
-    private final VBox topContainer;
+    public static final int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
+    public static final int DEFAULT_PAGE = 0;
 
+    private final VBox topContainer;
     @NonNull
     private final List<Record> records;
-    private int recordsPerPage = ApplicationContainerController.DEFAULT_RECORDS_PER_PAGE_VALUE;
+    private int recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
     private List<List<Record>> pages;
 
     @NonNull
