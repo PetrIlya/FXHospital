@@ -33,6 +33,23 @@ public class ApplicationContainerController {
 
     private List<List<Record>> pages;
 
+    public ApplicationContainerController(Stage mainWindow, List<Record> records) {
+        this.mainWindow = mainWindow;
+        this.records = records;
+        this.mainContainer = new MainContainer(
+                mainWindow,
+                MenuBarFactory.getInstance(),
+                ToolBarFactory.getInstance(
+                        this::addEvent,
+                        this::saveEvent,
+                        this::loadEvent,
+                        this::searchEvent,
+                        this::deleteEvent),
+                records);
+        System.out.println("Was here");
+        System.out.println(records.size());
+    }
+
     public ApplicationContainerController(Stage mainWindow) {
         this.mainWindow = mainWindow;
         this.records = new ArrayList<>();
