@@ -46,8 +46,6 @@ public class ApplicationContainerController {
                         this::searchEvent,
                         this::deleteEvent),
                 records);
-        System.out.println("Was here");
-        System.out.println(records.size());
     }
 
     public ApplicationContainerController(Stage mainWindow) {
