@@ -35,7 +35,8 @@ public class PageableTable {
         this.records = records;
         this.tableControlMenu = new TableControlMenu(
                 this::nextPageEvent, this::firstPageEvent,
-                this::previousPageEvent, this::lastPageEvent);
+                this::previousPageEvent, this::lastPageEvent,
+                this::update);
 
         this.topContainer.getChildren().addAll(table,
                 tableControlMenu.getTopContainer());
@@ -49,9 +50,18 @@ public class PageableTable {
         this.pages.get(this.currentPage).forEach(this.table.getItems()::add);
     }
 
-    public void hardUpdate() {
+    public final void hardUpdate() {
         this.pages = Lists.partition(records, recordsPerPage);
         update();
+    }
+
+    public final void update(ActionEvent e) {
+        try {
+            this.recordsPerPage = Integer.parseInt(tableControlMenu.getRecordsPerPage().getText());
+        } catch (NumberFormatException ex) {
+            this.recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
+        }
+        this.hardUpdate();
     }
 
     public void hardUpdate(List<Record> content) {

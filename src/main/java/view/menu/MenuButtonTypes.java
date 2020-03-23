@@ -4,7 +4,8 @@ public enum MenuButtonTypes {
     NEXT_PAGE(">"),
     PREVIOUS_PAGE("<"),
     LAST_PAGE(">>"),
-    FIRST_PAGE("<<");
+    FIRST_PAGE("<<"),
+    UPDATE("Update");
     private final String value;
 
     public String getValue() {
