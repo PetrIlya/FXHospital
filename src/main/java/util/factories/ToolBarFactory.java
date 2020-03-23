@@ -41,7 +41,7 @@ public class ToolBarFactory {
                 save);
     }
 
-    public static ToolBar getInstance(EventHandler<ActionEvent> addHandler,
+    public static ToolBar getInstance(EventHandler<ActionEvent> addEvent,
                                       EventHandler<ActionEvent> saveEvent,
                                       EventHandler<ActionEvent> loadEvent,
                                       EventHandler<ActionEvent> searchEvent,
@@ -49,7 +49,7 @@ public class ToolBarFactory {
         ToolBar bar = new ToolBar();
         bar.setOrientation(Orientation.VERTICAL);
         generateButtons(bar,
-                addHandler,
+                addEvent,
                 saveEvent,
                 loadEvent,
                 searchEvent,
@@ -58,12 +58,12 @@ public class ToolBarFactory {
     }
 
     private static void generateButtons(ToolBar bar,
-                                        EventHandler<ActionEvent> addHandler,
+                                        EventHandler<ActionEvent> addEvent,
                                         EventHandler<ActionEvent> saveEvent,
                                         EventHandler<ActionEvent> loadEvent,
                                         EventHandler<ActionEvent> searchEvent,
                                         EventHandler<ActionEvent> deleteEvent) {
-        Button add = ButtonFactory.buttonBuilder(addHandler, new ImageView("image/add.png"));
+        Button add = ButtonFactory.buttonBuilder(addEvent, new ImageView("image/add.png"));
         Button delete = ButtonFactory.buttonBuilder(deleteEvent, new ImageView("image/delete.png"));
         Button search = ButtonFactory.buttonBuilder(searchEvent, new ImageView("image/search.png"));
         Button load = ButtonFactory.buttonBuilder(loadEvent, new ImageView("image/load.png"));

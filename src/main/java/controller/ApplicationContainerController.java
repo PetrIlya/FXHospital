@@ -38,7 +38,12 @@ public class ApplicationContainerController {
         this.records = records;
         this.mainContainer = new MainContainer(
                 mainWindow,
-                MenuBarFactory.getInstance(),
+                MenuBarFactory.getInstance(
+                        this::addEvent,
+                        this::saveEvent,
+                        this::loadEvent,
+                        this::searchEvent,
+                        this::deleteEvent),
                 ToolBarFactory.getInstance(
                         this::addEvent,
                         this::saveEvent,
