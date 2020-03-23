@@ -72,13 +72,17 @@ public class PageableTable {
     }
 
     private void nextPageEvent(ActionEvent e) {
-        this.currentPage++;
-        update();
+        if (this.currentPage != pages.size() - 1) {
+            this.currentPage++;
+            update();
+        }
     }
 
     private void previousPageEvent(ActionEvent e) {
-        this.currentPage--;
-        update();
+        if (this.currentPage != 0) {
+            this.currentPage--;
+            update();
+        }
     }
 
     private void firstPageEvent(ActionEvent e) {
