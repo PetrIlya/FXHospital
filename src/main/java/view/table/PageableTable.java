@@ -99,7 +99,7 @@ public class PageableTable {
 
     private void updateLabelText() {
         this.tableControlMenu.getText().setText(TableControlMenu.CURRENT_PAGE +
-                (this.currentPage + 1) + "/" + (this.pages.size() + 1) +
+                (this.currentPage + 1) + "/" + this.pages.size() +
                 " " + TableControlMenu.AMOUNT_OF_RECORDS + this.records.size());
     }
 }
