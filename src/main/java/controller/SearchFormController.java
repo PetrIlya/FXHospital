@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -38,5 +39,6 @@ public class SearchFormController {
                 filter(this.form::meetsSearchRequirements).
                 forEach(this.foundedRecords::add);
         this.table.hardUpdate();
+        new Alert(Alert.AlertType.INFORMATION, "Founded: " + this.foundedRecords.size()).show();
     }
 }
