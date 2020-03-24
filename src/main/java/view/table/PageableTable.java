@@ -49,15 +49,16 @@ public class PageableTable {
     }
 
     public final void update() {
-        this.currentPage = DEFAULT_PAGE;
         this.table.getItems().clear();
         if (this.pages.size() != 0) {
             this.pages.get(this.currentPage).forEach(this.table.getItems()::add);
         }
+        updateLabelText();
     }
 
     public final void hardUpdate() {
         this.pages = Lists.partition(records, recordsPerPage);
+        this.currentPage = DEFAULT_PAGE;
         update();
     }
 
@@ -68,6 +69,8 @@ public class PageableTable {
             this.recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
         }
         this.hardUpdate();
+
+
     }
 
     private void nextPageEvent(ActionEvent e) {
@@ -92,5 +95,11 @@ public class PageableTable {
     private void lastPageEvent(ActionEvent e) {
         this.currentPage = pages.size() - 1;
         update();
+    }
+
+    private void updateLabelText() {
+        this.tableControlMenu.getText().setText(TableControlMenu.CURRENT_PAGE +
+                (this.currentPage + 1) + "/" + (this.pages.size() + 1) +
+                " " + TableControlMenu.AMOUNT_OF_RECORDS + this.records.size());
     }
 }

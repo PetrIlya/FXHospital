@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -43,5 +44,7 @@ public class DeleteFormController {
         this.records.removeAll(deletedRecords);
         this.table.hardUpdate();
         this.mainTable.hardUpdate();
+
+        new Alert(Alert.AlertType.INFORMATION, "Deleted: " + this.deletedRecords.size()).show();
     }
 }

@@ -3,6 +3,7 @@ package view.table;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,6 +15,9 @@ import view.menu.MenuButtonTypes;
 @Getter
 @Setter
 public class TableControlMenu {
+    public static final String CURRENT_PAGE = "Current page: ";
+    public static final String AMOUNT_OF_RECORDS = "Amount of records: ";
+
     private HBox topContainer;
 
     private VBox centerContainer;
@@ -26,6 +30,8 @@ public class TableControlMenu {
     private TextField recordsPerPage;
     private Button update;
 
+    private Label text;
+
     public TableControlMenu(
             EventHandler<ActionEvent> nextPageEvent,
             EventHandler<ActionEvent> firstPageEvent,
@@ -36,13 +42,15 @@ public class TableControlMenu {
                 previousPageEvent, lastPageEvent, updateEvent);
         this.centerContainer = new VBox();
         buildTextField();
+        buildLabel();
 
         this.topContainer = new HBox(
                 firstPage,
                 previousPage,
                 centerContainer,
                 nextPage,
-                lastPage);
+                lastPage,
+                text);
     }
 
     void buildButtons(EventHandler<ActionEvent> nextPageEvent,
@@ -65,5 +73,9 @@ public class TableControlMenu {
     private void buildTextField() {
         this.recordsPerPage = new TextField(Integer.toString(PageableTable.DEFAULT_RECORDS_PER_PAGE_VALUE));
         this.centerContainer.getChildren().addAll(this.recordsPerPage, this.update);
+    }
+
+    private void buildLabel() {
+        this.text = new Label();
     }
 }
