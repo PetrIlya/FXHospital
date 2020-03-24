@@ -39,6 +39,6 @@ public class SearchFormController {
                 filter(this.form::meetsSearchRequirements).
                 forEach(this.foundedRecords::add);
         this.table.hardUpdate();
-        new Alert(Alert.AlertType.INFORMATION, "Founded: " + this.foundedRecords.size()).show();
+        new Alert(Alert.AlertType.NONE, "Founded: " + this.foundedRecords.size()).show();
     }
 }
