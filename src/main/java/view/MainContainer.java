@@ -11,6 +11,7 @@ import lombok.Setter;
 import model.Record;
 import util.factories.table.TableStructureFactory;
 import view.network.PackManagerForm;
+import view.table.OfflineTable;
 import view.table.PageableTable;
 
 import java.util.List;
@@ -22,8 +23,7 @@ public class MainContainer {
 
     @NonNull
     private final BorderPane mainContainer;
-    @NonNull
-    private final PageableTable pageableTable;
+    private final @NonNull PageableTable table;
     @NonNull
     private final ToolBar toolBarContainer;
     @NonNull
@@ -40,7 +40,7 @@ public class MainContainer {
         this.menuBarContainer = menuBarContainer;
         this.packManagerForm = packManagerForm;
 
-        this.pageableTable = new PageableTable(TableStructureFactory.buildTableStructure(), records);
+        this.table = new OfflineTable(TableStructureFactory.buildTableStructure(), records);
 
         this.mainContainer = new BorderPane();
         configContainer();
@@ -54,7 +54,7 @@ public class MainContainer {
     private void configContainer() {
         this.mainContainer.setTop(this.menuBarContainer);
         this.mainContainer.setLeft(this.toolBarContainer);
-        this.mainContainer.setCenter(this.pageableTable.getTopContainer());
+        this.mainContainer.setCenter(this.table.getTopContainer());
         this.mainContainer.setRight(this.packManagerForm.getContainer());
     }
 }

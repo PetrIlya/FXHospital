@@ -71,7 +71,7 @@ public class TableControlMenu {
     }
 
     private void buildTextField() {
-        this.recordsPerPage = new TextField(Integer.toString(PageableTable.DEFAULT_RECORDS_PER_PAGE_VALUE));
+        this.recordsPerPage = new TextField(Integer.toString(OfflineTable.DEFAULT_RECORDS_PER_PAGE_VALUE));
         this.centerContainer.getChildren().addAll(this.recordsPerPage, this.update);
     }
 

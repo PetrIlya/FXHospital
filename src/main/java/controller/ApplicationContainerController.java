@@ -51,8 +51,6 @@ public class ApplicationContainerController {
         this.mainWindow = mainWindow;
         this.records = new ArrayList<>();
         this.currentPack = new PackInformation("", 0);
-        //TODO: Add network connection
-
         Properties properties = new Properties();
         properties.load(new FileReader(
                 "src/main/resources/connection.properties",
@@ -92,7 +90,7 @@ public class ApplicationContainerController {
     }
 
     public void addEvent(ActionEvent e) {
-        new AddFormController(records, mainContainer.getPageableTable());
+        new AddFormController(records, mainContainer.getTable());
     }
 
     public void searchEvent(ActionEvent e) {
@@ -130,13 +128,13 @@ public class ApplicationContainerController {
             } catch (SAXException | IOException | ParserConfigurationException ex) {
                 ex.printStackTrace();
             }
-            this.mainContainer.getPageableTable().hardUpdate();
+            this.mainContainer.getTable().hardUpdate();
         }
     }
 
     public void deleteEvent(ActionEvent e) {
         new DeleteFormController(records,
-                mainContainer.getPageableTable());
+                mainContainer.getTable());
     }
 
     public void addPackEvent(ActionEvent e) {

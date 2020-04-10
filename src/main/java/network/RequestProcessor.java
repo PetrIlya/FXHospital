@@ -29,7 +29,7 @@ public class RequestProcessor {
                 baseUrl(serverUri).
                 build();
         this.serverUri = serverUri;
-        setCurrentPack(currentPack);
+        this.currentPack = currentPack;
     }
 
     public List<PackInformation> getAllPacksInformation() {
@@ -38,6 +38,20 @@ public class RequestProcessor {
                 uri(PACKS_URI).
                 exchange().
                 flatMap(response -> response.bodyToMono(PackInformation[].class)).
+                map(List::of).
+                block();
+    }
+
+    public List<Record> getRecords(int page, int size) {
+        return this.webClient.
+                get().
+                uri(uriBuilder -> uriBuilder.
+                        path(PACKS_URI + currentPack).
+                        queryParam(PAGE_PARAMETER, page).
+                        queryParam(SIZE_PARAMETER, size).
+                        build()).
+                exchange().
+                flatMap(response -> response.bodyToMono(Record[].class)).
                 map(List::of).
                 block();
     }
