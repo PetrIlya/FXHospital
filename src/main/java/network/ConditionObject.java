@@ -1,11 +1,13 @@
 package network;
 
 import exceptions.StageElementIsEmptyException;
+import lombok.Builder;
 import lombok.Data;
 import model.Doctor;
 import model.Record;
 
 @Data
+@Builder
 public class ConditionObject {
     private static final String EMPTY_STRING = "";
     private String studentSurname;

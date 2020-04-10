@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import network.ConditionObject;
 import util.TableColumnNames;
 
 @Getter
@@ -220,5 +221,17 @@ public class Form {
         Scene root = new Scene(this.dialogContainer);
         window.setScene(root);
         window.show();
+    }
+
+    public ConditionObject getConditionObject() {
+        return ConditionObject.builder().
+                birthDate(this.birthDate.getValue().toString()).
+                illnessDate(this.illnessDate.getValue().toString()).
+                studentSurname(this.studentSurname.getText()).
+                studentAddress(this.studentAddress.getText()).
+                doctorSurname(this.doctorSurname.getText()).
+                doctorName(this.doctorName.getText()).
+                doctorMiddleName(this.doctorMiddleName.getText()).
+                build();
     }
 }

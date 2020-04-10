@@ -2,9 +2,11 @@ import controller.ApplicationContainerController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         ApplicationContainerController controller =
                 new ApplicationContainerController(stage);
     }

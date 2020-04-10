@@ -32,6 +32,16 @@ public class RequestProcessor {
         setCurrentPack(currentPack);
     }
 
+    public List<PackInformation> getAllPacksInformation() {
+        return this.webClient.
+                get().
+                uri(PACKS_URI).
+                exchange().
+                flatMap(response -> response.bodyToMono(PackInformation[].class)).
+                map(List::of).
+                block();
+    }
+
     public void deletePack(String packName) {
         this.webClient.
                 delete().

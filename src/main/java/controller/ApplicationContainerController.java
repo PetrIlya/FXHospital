@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import model.Record;
 import network.PackInformation;
+import network.RequestProcessor;
 import org.xml.sax.SAXException;
 import util.factories.MenuBarFactory;
 import util.factories.PackManagerFactory;
@@ -21,9 +22,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.TransformerException;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 @Getter
@@ -34,17 +38,29 @@ public class ApplicationContainerController {
 
     private final MainContainer mainContainer;
     private final PackManagerForm packManagerForm;
-
     private final List<Record> records;
 
     private final List<PackInformation> packInformationList;
+    private final PackInformation currentPack;
+
     private final List<String> names;
 
-    public ApplicationContainerController(Stage mainWindow) {
+    private final RequestProcessor processor;
+
+    public ApplicationContainerController(Stage mainWindow) throws IOException {
         this.mainWindow = mainWindow;
         this.records = new ArrayList<>();
+        this.currentPack = new PackInformation("", 0);
         //TODO: Add network connection
-        this.packInformationList = new ArrayList<>();
+
+        Properties properties = new Properties();
+        properties.load(new FileReader(
+                "src/main/resources/connection.properties",
+                Charset.defaultCharset()));
+        this.processor = new RequestProcessor(properties.getProperty("server"), "");
+
+        this.packInformationList = prepareCollection();
+
         this.names = FXCollections.observableArrayList(this.packInformationList.
                 stream().
                 map(PackInformation::getName).
@@ -65,6 +81,14 @@ public class ApplicationContainerController {
                         this::deleteEvent),
                 packManagerForm,
                 records);
+    }
+
+    private List<PackInformation> prepareCollection() {
+        List<PackInformation> packInformationList = this.processor.getAllPacksInformation();
+        if (packInformationList.size() == 0) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(packInformationList);
     }
 
     public void addEvent(ActionEvent e) {
@@ -119,7 +143,8 @@ public class ApplicationContainerController {
         String packToAdd = this.packManagerForm.getPackToAdd();
         if (!names.contains(packToAdd) && !packToAdd.equals("")) {
             this.names.add(packToAdd);
-            //TODO: complete functional
+            this.processor.postPack(packToAdd);
+            this.packInformationList.add(new PackInformation(packToAdd, 0));
         }
     }
 
@@ -127,7 +152,14 @@ public class ApplicationContainerController {
         String packToDelete = this.packManagerForm.getPackToDelete();
         if (names.contains(packToDelete) && !packToDelete.equals("")) {
             this.names.remove(packToDelete);
-            //TODO: complete functional
+            this.processor.deletePack(packToDelete);
+            PackInformation mock = new PackInformation(packToDelete, 0);
+            this.packInformationList.
+                    remove(mock);
+            if (this.currentPack.equals(mock)) {
+                this.currentPack.setName("");
+                this.currentPack.setTotalRecordsAmount(0);
+            }
         }
     }
 }
