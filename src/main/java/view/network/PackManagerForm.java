@@ -17,8 +17,11 @@ public class PackManagerForm {
     private ComboBox<String> packNames;
     private Button select;
 
-    private TextField newPackName;
+    private TextField packToAdd;
     private Button add;
+
+    private TextField packToDelete;
+    private Button delete;
 
     public PackManagerForm(List<String> names) {
         //TODO: Add correct event processors
@@ -26,15 +29,18 @@ public class PackManagerForm {
         this.container = new VBox();
         this.packNames = new ComboBox<>(FXCollections.
                 observableArrayList(names));
-        this.newPackName = new TextField();
+        this.packToAdd = new TextField();
         this.select = ButtonFactory.generateButton(null, "Select");
         this.add = ButtonFactory.generateButton(null, "Add new pack");
+
+        this.packToDelete = new TextField();
+        this.delete = ButtonFactory.generateButton(null, "Delete pack");
         configContainer();
     }
 
     private void configContainer() {
         this.container.
                 getChildren().
-                addAll(packNames, select, newPackName, add);
+                addAll(packNames, select, packToAdd, add, packToDelete, delete);
     }
 }
