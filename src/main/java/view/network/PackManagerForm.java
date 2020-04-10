@@ -13,15 +13,15 @@ import java.util.List;
 @Getter
 public class PackManagerForm {
     private final List<String> names;
-    private VBox container;
-    private ComboBox<String> packNames;
-    private Button select;
+    private final VBox container;
+    private final ComboBox<String> packNames;
+    private final Button select;
 
-    private TextField packToAdd;
-    private Button add;
+    private final TextField packToAdd;
+    private final Button add;
 
-    private TextField packToDelete;
-    private Button delete;
+    private final TextField packToDelete;
+    private final Button delete;
 
     public PackManagerForm(List<String> names) {
         //TODO: Add correct event processors

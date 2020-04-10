@@ -8,8 +8,6 @@ import model.Person;
 import model.Record;
 import model.Student;
 
-import java.time.format.DateTimeFormatter;
-
 public class AddForm extends Form {
     private static final String ACTION_NAME = "Add";
 
@@ -23,7 +21,6 @@ public class AddForm extends Form {
     }
 
     public Student getStudent() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/mm/yyyy");
         return new Student(
                 this.getStudentAddress().getText(),
                 this.getBirthDate().getValue(),

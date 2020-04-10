@@ -33,8 +33,6 @@ public class ApplicationContainerController {
 
     private List<Record> records;
 
-    private List<List<Record>> pages;
-
     public ApplicationContainerController(Stage mainWindow, List<Record> records) {
         this.mainWindow = mainWindow;
         this.records = records;
