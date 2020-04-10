@@ -29,7 +29,7 @@ public class RequestProcessor {
                 baseUrl(serverUri).
                 build();
         this.serverUri = serverUri;
-        this.currentPack = currentPack;
+        setCurrentPack(currentPack);
     }
 
     public void deletePack(String packName) {

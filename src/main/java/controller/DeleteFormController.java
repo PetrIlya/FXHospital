@@ -45,6 +45,6 @@ public class DeleteFormController {
         this.table.hardUpdate();
         this.mainTable.hardUpdate();
 
-        new Alert(Alert.AlertType.NONE, "Deleted: " + this.deletedRecords.size()).show();
+        new Alert(Alert.AlertType.CONFIRMATION, "Deleted: " + this.deletedRecords.size()).show();
     }
 }
