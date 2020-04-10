@@ -59,15 +59,15 @@ public class TableControlMenu {
                       EventHandler<ActionEvent> lastPageEvent,
                       EventHandler<ActionEvent> updateEvent) {
         this.previousPage = ButtonFactory.
-                buttonBuilder(previousPageEvent, MenuButtonTypes.PREVIOUS_PAGE.getValue());
+                generateButton(previousPageEvent, MenuButtonTypes.PREVIOUS_PAGE.getValue());
         this.nextPage = ButtonFactory.
-                buttonBuilder(nextPageEvent, MenuButtonTypes.NEXT_PAGE.getValue());
+                generateButton(nextPageEvent, MenuButtonTypes.NEXT_PAGE.getValue());
         this.lastPage = ButtonFactory.
-                buttonBuilder(lastPageEvent, MenuButtonTypes.LAST_PAGE.getValue());
+                generateButton(lastPageEvent, MenuButtonTypes.LAST_PAGE.getValue());
         this.firstPage = ButtonFactory.
-                buttonBuilder(firstPageEvent, MenuButtonTypes.FIRST_PAGE.getValue());
+                generateButton(firstPageEvent, MenuButtonTypes.FIRST_PAGE.getValue());
         this.update = ButtonFactory.
-                buttonBuilder(updateEvent, MenuButtonTypes.UPDATE.getValue());
+                generateButton(updateEvent, MenuButtonTypes.UPDATE.getValue());
     }
 
     private void buildTextField() {

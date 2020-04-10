@@ -8,6 +8,7 @@ import lombok.Setter;
 import model.Record;
 import org.xml.sax.SAXException;
 import util.factories.MenuBarFactory;
+import util.factories.PackManagerFactory;
 import util.factories.ToolBarFactory;
 import util.xml.RecordReader;
 import util.xml.RecordWriter;
@@ -19,6 +20,7 @@ import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -50,6 +52,7 @@ public class ApplicationContainerController {
                         this::loadEvent,
                         this::searchEvent,
                         this::deleteEvent),
+                PackManagerFactory.generatePackManagerForm(Collections.emptyList()),
                 records);
     }
 
@@ -65,6 +68,7 @@ public class ApplicationContainerController {
                         this::loadEvent,
                         this::searchEvent,
                         this::deleteEvent),
+                PackManagerFactory.generatePackManagerForm(Collections.emptyList()),
                 records);
     }
 
