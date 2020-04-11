@@ -10,6 +10,8 @@ import util.RecordGenerator;
 import view.form.AddForm;
 import view.table.PageableTable;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class AddFormController {
@@ -21,21 +23,31 @@ public class AddFormController {
     private final RequestProcessor processor;
     @NonNull
     private final PackInformation currentPack;
+    @NonNull
+    private final List<PackInformation> packInformationList;
 
     public AddFormController(@NonNull PageableTable table,
                              @NonNull RequestProcessor processor,
-                             @NonNull PackInformation currentPack) {
+                             @NonNull PackInformation currentPack,
+                             @NonNull List<PackInformation> packInformationList) {
         this.table = table;
         this.processor = processor;
         this.currentPack = currentPack;
+        this.packInformationList = packInformationList;
+
         this.form = new AddForm(this::processAddEvent);
         this.form.show();
     }
 
     private void processAddEvent(ActionEvent e) {
-        //TODO: Remove generator and add form.
+        //TODO: Remove generator.
         this.processor.postRecord(RecordGenerator.generateRecord());
         this.currentPack.incrementRecordsAmount();
+        this.packInformationList.
+                stream().
+                takeWhile(this.currentPack::equals).
+                findFirst().
+                ifPresent(PackInformation::incrementRecordsAmount);
         this.table.hardUpdate();
     }
 }

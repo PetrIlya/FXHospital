@@ -94,7 +94,7 @@ public class OnlineTable implements PageableTable {
 
     @Override
     public void lastPageEvent(ActionEvent e) {
-        this.currentPage = this.currentPack.getLastPageIndex(recordsPerPage);
+        this.currentPage = this.currentPack.getLastPageIndex(recordsPerPage) - 1;
         update();
     }
 

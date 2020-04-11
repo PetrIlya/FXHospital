@@ -225,8 +225,8 @@ public class Form {
 
     public ConditionObject getConditionObject() {
         return ConditionObject.builder().
-                birthDate(this.birthDate.getValue().toString()).
-                illnessDate(this.illnessDate.getValue().toString()).
+                birthDate(this.birthDate.getEditor().getText()).
+                illnessDate(this.illnessDate.getEditor().getText()).
                 studentSurname(this.studentSurname.getText()).
                 studentAddress(this.studentAddress.getText()).
                 doctorSurname(this.doctorSurname.getText()).

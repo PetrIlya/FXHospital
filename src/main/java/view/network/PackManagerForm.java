@@ -29,7 +29,6 @@ public class PackManagerForm {
                            EventHandler<ActionEvent> selectionEvent,
                            EventHandler<ActionEvent> addPackEvent,
                            EventHandler<ActionEvent> deletePackEvent) {
-        //TODO: Add correct event processors
         this.names = names;
         this.container = new VBox();
         this.packNames = new ComboBox<>((ObservableList) names);
