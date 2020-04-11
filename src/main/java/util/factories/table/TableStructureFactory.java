@@ -13,7 +13,13 @@ public final class TableStructureFactory {
     public static TableView<Record> buildTableStructure() {
         TableColumn<Record, String> studentFullName = new TableColumn<>(
                 TableColumnNames.STUDENT_FULL_NAME.getValue());
-        studentFullName.setCellValueFactory(cell -> cell.getValue().getStudent().getFullName());
+
+        studentFullName.setCellValueFactory(cell -> {
+            System.out.println(cell.getValue());
+            System.out.println(cell.getValue().getStudent());
+            System.out.println(cell.getValue().getStudent().getFullName());
+            return cell.getValue().getStudent().getFullName();
+        });
         TableColumn<Record, String> doctorFullName = new TableColumn<>(
                 TableColumnNames.DOCTOR_FULL_NAME.getValue());
         doctorFullName.setCellValueFactory(cell -> cell.getValue().getDoctor().getFullName());

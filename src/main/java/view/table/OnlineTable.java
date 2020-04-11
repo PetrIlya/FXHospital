@@ -3,7 +3,6 @@ package view.table;
 import javafx.event.ActionEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import lombok.NonNull;
 import model.Record;
 import network.PackInformation;
 import network.RequestProcessor;
@@ -13,7 +12,6 @@ import java.util.List;
 public class OnlineTable implements PageableTable {
 
     private final VBox topContainer;
-    @NonNull
     private final List<Record> records;
     private final TableView<Record> table;
     private final TableControlMenu tableControlMenu;
@@ -22,14 +20,22 @@ public class OnlineTable implements PageableTable {
     private int recordsPerPage = DEFAULT_RECORDS_PER_PAGE_VALUE;
     private int currentPage;
 
-    public OnlineTable(@NonNull TableView<Record> table,
+    public OnlineTable(List<Record> records,
+                       TableView<Record> table,
                        PackInformation currentPack,
                        RequestProcessor processor) {
         this.topContainer = new VBox();
         this.table = table;
         this.currentPack = currentPack;
         this.processor = processor;
-        this.records = processor.getRecords(DEFAULT_PAGE, DEFAULT_RECORDS_PER_PAGE_VALUE);
+
+        records.clear();
+        records.addAll(processor.
+                getRecords(DEFAULT_PAGE,
+                        DEFAULT_RECORDS_PER_PAGE_VALUE));
+
+
+        this.records = records;
         this.tableControlMenu = new TableControlMenu(
                 this::nextPageEvent, this::firstPageEvent,
                 this::previousPageEvent, this::lastPageEvent,
@@ -37,14 +43,14 @@ public class OnlineTable implements PageableTable {
         this.topContainer.getChildren().addAll(table,
                 tableControlMenu.getTopContainer());
         this.currentPage = DEFAULT_PAGE;
-        if (records.size() != 0) {
-            hardUpdate();
-        }
     }
 
     @Override
     public final void update() {
         this.table.getItems().clear();
+        this.records.clear();
+        this.records.addAll(processor.getRecords(currentPage, recordsPerPage));
+        this.table.getItems().addAll(records);
         updateLabelText();
     }
 
@@ -66,12 +72,18 @@ public class OnlineTable implements PageableTable {
 
     @Override
     public void nextPageEvent(ActionEvent e) {
-        //TODO Add implementation
+        if (this.currentPage + 1 != this.currentPack.getLastPageIndex(recordsPerPage)) {
+            this.currentPage++;
+            update();
+        }
     }
 
     @Override
     public void previousPageEvent(ActionEvent e) {
-        //TODO Add implementation
+        if (this.currentPage - 1 >= 0) {
+            this.currentPage--;
+            update();
+        }
     }
 
     @Override
@@ -82,16 +94,21 @@ public class OnlineTable implements PageableTable {
 
     @Override
     public void lastPageEvent(ActionEvent e) {
-        //TODO Add implementation
+        this.currentPage = this.currentPack.getLastPageIndex(recordsPerPage);
         update();
     }
 
     @Override
     public void updateLabelText() {
-        //TODO Add implementation
-        this.tableControlMenu.getText().setText(TableControlMenu.CURRENT_PAGE +
-                (this.currentPage + 1) + "/" + DEFAULT_PAGE +
-                " " + TableControlMenu.AMOUNT_OF_RECORDS + this.records.size());
+        this.tableControlMenu.
+                getText().
+                setText(TableControlMenu.CURRENT_PAGE +
+                        (this.currentPage + 1) +
+                        "/" +
+                        this.currentPack.getLastPageIndex(recordsPerPage) +
+                        " " +
+                        TableControlMenu.AMOUNT_OF_RECORDS +
+                        this.currentPack.getTotalRecordsAmount());
     }
 
     @Override
