@@ -14,8 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class OfflineTable implements PageableTable {
-    public static final int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
-    public static final int DEFAULT_PAGE = 0;
 
     private final VBox topContainer;
     @NonNull

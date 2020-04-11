@@ -17,6 +17,7 @@ import util.xml.RecordReader;
 import util.xml.RecordWriter;
 import view.MainContainer;
 import view.network.PackManagerForm;
+import view.table.PageableTable;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -65,6 +66,7 @@ public class ApplicationContainerController {
                 collect(Collectors.toList()));
         this.packManagerForm = PackManagerFactory.
                 generatePackManagerForm(names,
+                        this::selectionEvent,
                         this::addPackEvent,
                         this::deletePackEvent);
 
@@ -137,6 +139,22 @@ public class ApplicationContainerController {
                 mainContainer.getTable());
     }
 
+    public void selectionEvent(ActionEvent e) {
+        String selectedPack = this.packManagerForm.getCurrentSelectedPackName();
+        if (!selectedPack.equals("")) {
+            int amountOfRecordsOfPack = PackInformation.amountOfRecordsOfPack(selectedPack, packInformationList);
+            this.currentPack.setTotalRecordsAmount(amountOfRecordsOfPack);
+            this.currentPack.setName(selectedPack);
+            this.processor.setCurrentPack(selectedPack);
+            this.records.clear();
+            this.records.
+                    addAll(this.processor.
+                            getRecords(PageableTable.DEFAULT_PAGE,
+                                    PageableTable.DEFAULT_RECORDS_PER_PAGE_VALUE));
+            this.mainContainer.getTable().update();
+        }
+    }
+
     public void addPackEvent(ActionEvent e) {
         String packToAdd = this.packManagerForm.getPackToAdd();
         if (!names.contains(packToAdd) && !packToAdd.equals("")) {
@@ -157,6 +175,8 @@ public class ApplicationContainerController {
             if (this.currentPack.equals(mock)) {
                 this.currentPack.setName("");
                 this.currentPack.setTotalRecordsAmount(0);
+                this.records.clear();
+                this.mainContainer.getTable().hardUpdate();
             }
         }
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -24,5 +25,13 @@ public class PackInformation {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public static int amountOfRecordsOfPack(String name, List<PackInformation> packInformationList) {
+        return packInformationList.
+                stream().
+                dropWhile(pack -> !pack.getName().equals(name)).
+                findFirst().
+                map(PackInformation::getTotalRecordsAmount).get();
     }
 }

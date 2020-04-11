@@ -11,8 +11,6 @@ import network.RequestProcessor;
 import java.util.List;
 
 public class OnlineTable implements PageableTable {
-    public static final int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
-    public static final int DEFAULT_PAGE = 0;
 
     private final VBox topContainer;
     @NonNull

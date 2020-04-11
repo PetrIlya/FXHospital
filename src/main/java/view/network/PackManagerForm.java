@@ -26,6 +26,7 @@ public class PackManagerForm {
     private final Button delete;
 
     public PackManagerForm(List<String> names,
+                           EventHandler<ActionEvent> selectionEvent,
                            EventHandler<ActionEvent> addPackEvent,
                            EventHandler<ActionEvent> deletePackEvent) {
         //TODO: Add correct event processors
@@ -33,7 +34,7 @@ public class PackManagerForm {
         this.container = new VBox();
         this.packNames = new ComboBox<>((ObservableList) names);
         this.packToAdd = new TextField();
-        this.select = ButtonFactory.generateButton(null, "Select");
+        this.select = ButtonFactory.generateButton(selectionEvent, "Select");
         this.add = ButtonFactory.generateButton(addPackEvent, "Add new pack");
 
         this.packToDelete = new TextField();
@@ -53,5 +54,9 @@ public class PackManagerForm {
 
     public String getPackToDelete() {
         return this.packToDelete.getText();
+    }
+
+    public String getCurrentSelectedPackName() {
+        return this.packNames.getSelectionModel().getSelectedItem();
     }
 }

@@ -79,7 +79,6 @@ public class RequestProcessor {
                         build())).
                 exchange().
                 block();
-        setCurrentPack(packName);
     }
 
     public void postRecord(Record record) {

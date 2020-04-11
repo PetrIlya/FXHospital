@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
 
 public interface PageableTable {
+    int DEFAULT_RECORDS_PER_PAGE_VALUE = 10;
+    int DEFAULT_PAGE = 0;
+
     VBox getTopContainer();
 
     void update();

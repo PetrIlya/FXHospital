@@ -8,8 +8,9 @@ import java.util.List;
 
 public class PackManagerFactory {
     public static PackManagerForm generatePackManagerForm(List<String> names,
+                                                          EventHandler<ActionEvent> selectEvent,
                                                           EventHandler<ActionEvent> addEvent,
                                                           EventHandler<ActionEvent> deleteEvent) {
-        return new PackManagerForm(names, addEvent, deleteEvent);
+        return new PackManagerForm(names, selectEvent, addEvent, deleteEvent);
     }
 }
