@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
+import network.RequestProcessor;
 import util.factories.table.TableStructureFactory;
 import view.form.SearchForm;
 import view.table.OfflineTable;
@@ -17,16 +18,15 @@ import java.util.List;
 @Getter
 @Setter
 public class SearchFormController {
-    @NonNull
-    private final List<Record> records;
     private List<Record> foundedRecords;
     @NonNull
     private final SearchForm form;
     @NonNull
     private PageableTable table;
+    private final RequestProcessor processor;
 
-    public SearchFormController(@NonNull List<Record> records) {
-        this.records = records;
+    public SearchFormController(RequestProcessor processor) {
+        this.processor = processor;
         this.foundedRecords = new ArrayList<>();
         this.table = new OfflineTable(TableStructureFactory.buildTableStructure(),
                 foundedRecords);
@@ -36,9 +36,9 @@ public class SearchFormController {
 
     private void processSearchEvent(ActionEvent e) {
         this.foundedRecords.clear();
-        this.records.stream().
-                filter(this.form::meetsSearchRequirements).
-                forEach(this.foundedRecords::add);
+        this.foundedRecords.
+                addAll(this.processor.
+                        searchRecordByCondition(this.form.getConditionObject()));
         this.table.hardUpdate();
         new Alert(Alert.AlertType.INFORMATION, "Founded: " + this.foundedRecords.size()).show();
     }

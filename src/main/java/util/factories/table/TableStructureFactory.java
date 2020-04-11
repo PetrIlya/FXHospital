@@ -15,9 +15,6 @@ public final class TableStructureFactory {
                 TableColumnNames.STUDENT_FULL_NAME.getValue());
 
         studentFullName.setCellValueFactory(cell -> {
-            System.out.println(cell.getValue());
-            System.out.println(cell.getValue().getStudent());
-            System.out.println(cell.getValue().getStudent().getFullName());
             return cell.getValue().getStudent().getFullName();
         });
         TableColumn<Record, String> doctorFullName = new TableColumn<>(

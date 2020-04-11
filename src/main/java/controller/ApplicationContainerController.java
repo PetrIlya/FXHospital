@@ -95,12 +95,13 @@ public class ApplicationContainerController {
         new AddFormController(
                 mainContainer.getTable(),
                 processor,
-                currentPack);
+                currentPack,
+                packInformationList);
         renewPackInformation();
     }
 
     public void searchEvent(ActionEvent e) {
-        new SearchFormController(records);
+        new SearchFormController(processor);
     }
 
     public void saveEvent(ActionEvent e) {
@@ -139,16 +140,14 @@ public class ApplicationContainerController {
     }
 
     public void deleteEvent(ActionEvent e) {
-        new DeleteFormController(records,
+        new DeleteFormController(processor,
                 mainContainer.getTable());
         renewPackInformation();
     }
 
     public void selectionEvent(ActionEvent e) {
         String selectedPack = this.packManagerForm.getCurrentSelectedPackName();
-        System.out.println("Selected pack is " + selectedPack);
         if (!selectedPack.equals("")) {
-            System.out.println("Here i'm");
             int amountOfRecordsOfPack = PackInformation.amountOfRecordsOfPack(selectedPack, packInformationList);
             this.currentPack.setTotalRecordsAmount(amountOfRecordsOfPack);
             this.currentPack.setName(selectedPack);
