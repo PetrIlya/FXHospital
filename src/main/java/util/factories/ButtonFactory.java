@@ -7,19 +7,19 @@ import javafx.scene.image.ImageView;
 
 public class ButtonFactory {
 
-    public static Button buttonBuilder(EventHandler<ActionEvent> handler) {
+    public static Button generateButton(EventHandler<ActionEvent> handler) {
         Button button = new Button();
         button.setOnAction(handler);
         return button;
     }
 
-    public static Button buttonBuilder(EventHandler<ActionEvent> handler, String buttonText) {
+    public static Button generateButton(EventHandler<ActionEvent> handler, String buttonText) {
         Button button = new Button(buttonText);
         button.setOnAction(handler);
         return button;
     }
 
-    public static Button buttonBuilder(EventHandler<ActionEvent> handler, ImageView image) {
+    public static Button generateButton(EventHandler<ActionEvent> handler, ImageView image) {
         Button button = new Button();
         button.setGraphic(image);
         button.setOnAction(handler);

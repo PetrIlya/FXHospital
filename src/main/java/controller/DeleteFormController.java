@@ -8,6 +8,7 @@ import lombok.Setter;
 import model.Record;
 import util.factories.table.TableStructureFactory;
 import view.form.DeleteForm;
+import view.table.OfflineTable;
 import view.table.PageableTable;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DeleteFormController {
     public DeleteFormController(@NonNull List<Record> records, @NonNull PageableTable mainTable) {
         this.records = records;
         this.deletedRecords = new ArrayList<>();
-        this.table = new PageableTable(TableStructureFactory.buildTableStructure(),
+        this.table = new OfflineTable(TableStructureFactory.buildTableStructure(),
                 deletedRecords);
         this.mainTable = mainTable;
         this.form = new DeleteForm(this::processDeleteEvent, table);
@@ -44,7 +45,6 @@ public class DeleteFormController {
         this.records.removeAll(deletedRecords);
         this.table.hardUpdate();
         this.mainTable.hardUpdate();
-
         new Alert(Alert.AlertType.INFORMATION, "Deleted: " + this.deletedRecords.size()).show();
     }
 }

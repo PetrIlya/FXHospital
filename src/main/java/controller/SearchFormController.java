@@ -8,6 +8,7 @@ import lombok.Setter;
 import model.Record;
 import util.factories.table.TableStructureFactory;
 import view.form.SearchForm;
+import view.table.OfflineTable;
 import view.table.PageableTable;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class SearchFormController {
     public SearchFormController(@NonNull List<Record> records) {
         this.records = records;
         this.foundedRecords = new ArrayList<>();
-        this.table = new PageableTable(TableStructureFactory.buildTableStructure(),
+        this.table = new OfflineTable(TableStructureFactory.buildTableStructure(),
                 foundedRecords);
         this.form = new SearchForm(this::processSearchEvent, table);
         this.form.show();

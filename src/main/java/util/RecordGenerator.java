@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RecordGenerator {
-    public static final Integer ZERO = 0;
 
     public static final List<String> names;
     public static final List<String> surnames;

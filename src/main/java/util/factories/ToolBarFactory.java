@@ -63,11 +63,11 @@ public class ToolBarFactory {
                                         EventHandler<ActionEvent> loadEvent,
                                         EventHandler<ActionEvent> searchEvent,
                                         EventHandler<ActionEvent> deleteEvent) {
-        Button add = ButtonFactory.buttonBuilder(addEvent, new ImageView("image/add.png"));
-        Button delete = ButtonFactory.buttonBuilder(deleteEvent, new ImageView("image/delete.png"));
-        Button search = ButtonFactory.buttonBuilder(searchEvent, new ImageView("image/search.png"));
-        Button load = ButtonFactory.buttonBuilder(loadEvent, new ImageView("image/load.png"));
-        Button save = ButtonFactory.buttonBuilder(saveEvent, new ImageView("/image/save.png"));
+        Button add = ButtonFactory.generateButton(addEvent, new ImageView("image/add.png"));
+        Button delete = ButtonFactory.generateButton(deleteEvent, new ImageView("image/delete.png"));
+        Button search = ButtonFactory.generateButton(searchEvent, new ImageView("image/search.png"));
+        Button load = ButtonFactory.generateButton(loadEvent, new ImageView("image/load.png"));
+        Button save = ButtonFactory.generateButton(saveEvent, new ImageView("/image/save.png"));
         bar.getItems().addAll(add,
                 delete,
                 search,

@@ -1,42 +1,24 @@
-package view.form;
+package network;
 
 import exceptions.StageElementIsEmptyException;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 import model.Doctor;
 import model.Record;
-import view.table.PageableTable;
 
-@Getter
-@Setter
-public class SearchForm extends Form {
-    private static final String ACTION_NAME = "Search";
-    @NonNull
-    private final PageableTable table;
-    private final HBox topContainer;
+@Data
+@Builder
+public class ConditionObject {
+    private static final String EMPTY_STRING = "";
+    private String studentSurname;
+    private String studentAddress;
 
-    public SearchForm(EventHandler<ActionEvent> eventProcessor, @NonNull PageableTable table) {
-        super(eventProcessor, ACTION_NAME);
-        this.table = table;
-        this.topContainer = new HBox();
-        reconfigureForm();
-    }
+    private String birthDate;
 
-    private void reconfigureForm() {
-        VBox container = super.getDialogContainer();
-        container.getChildren().removeAll(
-                super.getIllnessAnalyse(), super.getIllnessAnalyseIdtf(),
-                super.getStudentMiddleName(), super.getStudentMiddleNameIdtf(),
-                super.getStudentName(), super.getStudentNameIdtf());
-        this.topContainer.getChildren().addAll(super.getDialogContainer(), this.table.getTopContainer());
-    }
+    private String doctorSurname;
+    private String doctorName;
+    private String doctorMiddleName;
+    private String illnessDate;
 
     public boolean meetsSearchRequirements(Record record) {
         boolean equals = false;
@@ -104,23 +86,21 @@ public class SearchForm extends Form {
     }
 
     private boolean firstStage(Record record) throws StageElementIsEmptyException {
-        if (this.getStudentSurname().getText().
-                equals(EMPTY_STRING)) {
-            if (!this.getStudentAddress().getText().
-                    equals(EMPTY_STRING)) {
+        if (this.getStudentSurname().equals(EMPTY_STRING)) {
+            if (!this.getStudentAddress().equals(EMPTY_STRING)) {
                 throw new StageElementIsEmptyException();
             } else {
-                return this.getStudentAddress().getText().
+                return this.getStudentAddress().
                         equals(record.getStudent().getAddress());
             }
         } else {
-            if (this.getStudentSurname().getText().
+            if (this.getStudentSurname().
                     equals(record.getStudent().getSurname())) {
-                if (this.getStudentAddress().getText().
+                if (this.getStudentAddress().
                         equals(EMPTY_STRING)) {
                     return true;
                 } else {
-                    return this.getStudentAddress().getText().
+                    return this.getStudentAddress().
                             equals(record.getStudent().getAddress());
                 }
             } else {
@@ -130,45 +110,37 @@ public class SearchForm extends Form {
     }
 
     private boolean secondStage(Record record) throws StageElementIsEmptyException {
-        if (this.getBirthDate().getEditor().getText().equals(EMPTY_STRING)) {
+        if (this.getBirthDate().equals(EMPTY_STRING)) {
             throw new StageElementIsEmptyException();
         } else {
-            return this.getBirthDate().getValue().equals(record.getStudent().getBirthDate());
+            return record.getStudent().getBirthDate().toString().equals(this.getBirthDate());
         }
     }
 
     private boolean thirdStage(Record record) throws StageElementIsEmptyException {
-        if (this.getIllnessDate().getEditor().getText().equals(EMPTY_STRING) &&
-                this.getDoctorName().getText().equals(EMPTY_STRING) &&
-                this.getDoctorMiddleName().getText().equals(EMPTY_STRING) &&
-                this.getDoctorSurname().getText().equals(EMPTY_STRING)) {
+        if (this.getIllnessDate().equals(EMPTY_STRING) &&
+                this.getDoctorName().equals(EMPTY_STRING) &&
+                this.getDoctorMiddleName().equals(EMPTY_STRING) &&
+                this.getDoctorSurname().equals(EMPTY_STRING)) {
             throw new StageElementIsEmptyException();
         } else {
             if (getDoctorNameEquality(record.getDoctor())) {
                 return true;
             } else {
-                return this.getIllnessDate().getValue().equals(record.getStudent().getIllnessDate());
+                return record.getStudent().getIllnessDate().toString().equals(this.getIllnessDate());
             }
         }
     }
 
     private boolean getDoctorNameEquality(Doctor doctor) {
-        if (doctor.getSurname().equals(this.getDoctorSurname().getText())) {
+        if (doctor.getSurname().equals(this.getDoctorSurname())) {
             return true;
         } else {
-            if (doctor.getName().equals(this.getDoctorName().getText())) {
+            if (doctor.getName().equals(this.getDoctorName())) {
                 return true;
             } else {
-                return doctor.getMiddleName().equals(this.getDoctorMiddleName().getText());
+                return doctor.getMiddleName().equals(this.getDoctorMiddleName());
             }
         }
-    }
-
-    @Override
-    public void show() {
-        Stage window = new Stage();
-        Scene root = new Scene(this.topContainer);
-        window.setScene(root);
-        window.show();
     }
 }
