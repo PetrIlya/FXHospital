@@ -58,7 +58,8 @@ public class ApplicationContainerController {
                 Charset.defaultCharset()));
         this.processor = new RequestProcessor(properties.getProperty("server"), "");
 
-        this.packInformationList = prepareCollection();
+        this.packInformationList = new ArrayList<>();
+        renewPackInformation();
 
         this.names = FXCollections.observableArrayList(this.packInformationList.
                 stream().
@@ -80,19 +81,22 @@ public class ApplicationContainerController {
                         this::searchEvent,
                         this::deleteEvent),
                 packManagerForm,
-                records);
+                records,
+                processor,
+                currentPack);
     }
 
-    private List<PackInformation> prepareCollection() {
-        List<PackInformation> packInformationList = this.processor.getAllPacksInformation();
-        if (packInformationList.size() == 0) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(packInformationList);
+    private void renewPackInformation() {
+        this.packInformationList.clear();
+        this.packInformationList.addAll(processor.getAllPacksInformation());
     }
 
     public void addEvent(ActionEvent e) {
-        new AddFormController(records, mainContainer.getTable());
+        new AddFormController(
+                mainContainer.getTable(),
+                processor,
+                currentPack);
+        renewPackInformation();
     }
 
     public void searchEvent(ActionEvent e) {
@@ -137,11 +141,14 @@ public class ApplicationContainerController {
     public void deleteEvent(ActionEvent e) {
         new DeleteFormController(records,
                 mainContainer.getTable());
+        renewPackInformation();
     }
 
     public void selectionEvent(ActionEvent e) {
         String selectedPack = this.packManagerForm.getCurrentSelectedPackName();
+        System.out.println("Selected pack is " + selectedPack);
         if (!selectedPack.equals("")) {
+            System.out.println("Here i'm");
             int amountOfRecordsOfPack = PackInformation.amountOfRecordsOfPack(selectedPack, packInformationList);
             this.currentPack.setTotalRecordsAmount(amountOfRecordsOfPack);
             this.currentPack.setName(selectedPack);

@@ -1,11 +1,15 @@
 package model;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = false)
+@Data
+@NoArgsConstructor
 public class Student extends Person {
     @NonNull
     private String address;

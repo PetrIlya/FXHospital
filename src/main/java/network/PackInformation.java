@@ -27,11 +27,23 @@ public class PackInformation {
         return Objects.hash(name);
     }
 
+    public void incrementRecordsAmount() {
+        this.totalRecordsAmount++;
+    }
+
     public static int amountOfRecordsOfPack(String name, List<PackInformation> packInformationList) {
         return packInformationList.
                 stream().
                 dropWhile(pack -> !pack.getName().equals(name)).
                 findFirst().
                 map(PackInformation::getTotalRecordsAmount).get();
+    }
+
+    public final int getLastPageIndex(int recordsPerPage) {
+        if (totalRecordsAmount % recordsPerPage != 0) {
+            return (totalRecordsAmount / recordsPerPage) + 1;
+        } else {
+            return totalRecordsAmount / recordsPerPage;
+        }
     }
 }

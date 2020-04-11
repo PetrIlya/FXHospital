@@ -9,9 +9,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import model.Record;
+import network.PackInformation;
+import network.RequestProcessor;
 import util.factories.table.TableStructureFactory;
 import view.network.PackManagerForm;
-import view.table.OfflineTable;
+import view.table.OnlineTable;
 import view.table.PageableTable;
 
 import java.util.List;
@@ -35,12 +37,18 @@ public class MainContainer {
                          MenuBar menuBarContainer,
                          ToolBar toolBarContainer,
                          PackManagerForm packManagerForm,
-                         List<Record> records) {
+                         List<Record> records,
+                         RequestProcessor processor,
+                         PackInformation currentPack) {
         this.toolBarContainer = toolBarContainer;
         this.menuBarContainer = menuBarContainer;
         this.packManagerForm = packManagerForm;
 
-        this.table = new OfflineTable(TableStructureFactory.buildTableStructure(), records);
+        this.table = new OnlineTable(
+                records,
+                TableStructureFactory.buildTableStructure(),
+                currentPack,
+                processor);
 
         this.mainContainer = new BorderPane();
         configContainer();
@@ -48,7 +56,6 @@ public class MainContainer {
         this.containerScene = new Scene(this.mainContainer);
         mainWindow.setScene(this.containerScene);
         mainWindow.show();
-
     }
 
     private void configContainer() {
