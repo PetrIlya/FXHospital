@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -92,57 +93,77 @@ public class ApplicationContainerController {
     }
 
     public void addEvent(ActionEvent e) {
-        new AddFormController(
-                mainContainer.getTable(),
-                processor,
-                currentPack,
-                packInformationList);
-        renewPackInformation();
+        if (!this.currentPack.getName().equals("")) {
+            new AddFormController(
+                    mainContainer.getTable(),
+                    processor,
+                    currentPack,
+                    packInformationList);
+            renewPackInformation();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void searchEvent(ActionEvent e) {
-        new SearchFormController(processor);
+        if (!this.currentPack.getName().equals("")) {
+            new SearchFormController(processor);
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void saveEvent(ActionEvent e) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save");
-        File fileToSave = fileChooser.showSaveDialog(mainWindow);
+        if (this.processor == null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save");
+            File fileToSave = fileChooser.showSaveDialog(mainWindow);
 
-        if (fileToSave != null) {
-            RecordWriter writer = new RecordWriter(fileToSave, records);
-            try {
-                writer.write();
-            } catch (IOException | ParserConfigurationException | TransformerException ex) {
-                ex.printStackTrace();
+            if (fileToSave != null) {
+                RecordWriter writer = new RecordWriter(fileToSave, records);
+                try {
+                    writer.write();
+                } catch (IOException | ParserConfigurationException | TransformerException ex) {
+                    ex.printStackTrace();
+                }
             }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
         }
     }
 
     public void loadEvent(ActionEvent e) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load");
+        if (this.processor == null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Load");
 
-        File fileToLoad = fileChooser.showOpenDialog(this.mainWindow);
+            File fileToLoad = fileChooser.showOpenDialog(this.mainWindow);
 
-        if (fileToLoad != null) {
-            RecordReader loader = new RecordReader();
-            try {
-                SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad, loader);
+            if (fileToLoad != null) {
+                RecordReader loader = new RecordReader();
+                try {
+                    SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad, loader);
 
-                this.records.clear();
-                this.records.addAll(loader.getRecords());
-            } catch (SAXException | IOException | ParserConfigurationException ex) {
-                ex.printStackTrace();
+                    this.records.clear();
+                    this.records.addAll(loader.getRecords());
+                } catch (SAXException | IOException | ParserConfigurationException ex) {
+                    ex.printStackTrace();
+                }
+                this.mainContainer.getTable().hardUpdate();
             }
-            this.mainContainer.getTable().hardUpdate();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
         }
     }
 
     public void deleteEvent(ActionEvent e) {
-        new DeleteFormController(processor,
-                mainContainer.getTable());
-        renewPackInformation();
+        if (!this.currentPack.getName().equals("")) {
+            new DeleteFormController(processor,
+                    mainContainer.getTable());
+            renewPackInformation();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void selectionEvent(ActionEvent e) {
