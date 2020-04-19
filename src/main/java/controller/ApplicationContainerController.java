@@ -2,7 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.stage.FileChooser;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -92,57 +93,85 @@ public class ApplicationContainerController {
     }
 
     public void addEvent(ActionEvent e) {
-        new AddFormController(
-                mainContainer.getTable(),
-                processor,
-                currentPack,
-                packInformationList);
-        renewPackInformation();
+        if (!this.currentPack.getName().equals("")) {
+            new AddFormController(
+                    mainContainer.getTable(),
+                    processor,
+                    currentPack,
+                    packInformationList);
+            renewPackInformation();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void searchEvent(ActionEvent e) {
-        new SearchFormController(processor);
+        if (!this.currentPack.getName().equals("")) {
+            new SearchFormController(processor);
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void saveEvent(ActionEvent e) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save");
-        File fileToSave = fileChooser.showSaveDialog(mainWindow);
-
-        if (fileToSave != null) {
-            RecordWriter writer = new RecordWriter(fileToSave, records);
+        if (this.processor == null) {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Save");
+            FileChooser chooser = new SimpleFileChooser();
             try {
-                writer.write();
-            } catch (IOException | ParserConfigurationException | TransformerException ex) {
-                ex.printStackTrace();
+                Optional<File> fileToSave = chooser.save("default");
+                if (fileToSave.isPresent()) {
+                    RecordWriter writer = new RecordWriter(fileToSave.get(), records);
+                    try {
+                        writer.write();
+                    } catch (IOException | ParserConfigurationException | TransformerException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
+
+
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
         }
     }
 
     public void loadEvent(ActionEvent e) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load");
+        if (this.processor == null) {
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Load");
+            controller.FileChooser chooser = new SimpleFileChooser();
 
-        File fileToLoad = fileChooser.showOpenDialog(this.mainWindow);
+            Optional<File> fileToLoad = chooser.load();
+            // fileChooser.showOpenDialog(this.mainWindow);
 
-        if (fileToLoad != null) {
-            RecordReader loader = new RecordReader();
-            try {
-                SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad, loader);
+            if (fileToLoad.isPresent()) {
+                RecordReader loader = new RecordReader();
+                try {
+                    SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad.get(), loader);
 
-                this.records.clear();
-                this.records.addAll(loader.getRecords());
-            } catch (SAXException | IOException | ParserConfigurationException ex) {
-                ex.printStackTrace();
+                    this.records.clear();
+                    this.records.addAll(loader.getRecords());
+                } catch (SAXException | IOException | ParserConfigurationException ex) {
+                    ex.printStackTrace();
+                }
+                this.mainContainer.getTable().hardUpdate();
             }
-            this.mainContainer.getTable().hardUpdate();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
         }
     }
 
     public void deleteEvent(ActionEvent e) {
-        new DeleteFormController(processor,
-                mainContainer.getTable());
-        renewPackInformation();
+        if (!this.currentPack.getName().equals("")) {
+            new DeleteFormController(processor,
+                    mainContainer.getTable());
+            renewPackInformation();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        }
     }
 
     public void selectionEvent(ActionEvent e) {
