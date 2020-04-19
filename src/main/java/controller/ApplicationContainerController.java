@@ -1,5 +1,7 @@
 package controller;
 
+import com.github.PetrIlya.controller.FileChooser;
+import com.github.PetrIlya.controller.SimpleFileChooser;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -115,8 +117,6 @@ public class ApplicationContainerController {
 
     public void saveEvent(ActionEvent e) {
         if (this.processor == null) {
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setTitle("Save");
             FileChooser chooser = new SimpleFileChooser();
             try {
                 Optional<File> fileToSave = chooser.save("default");
@@ -140,9 +140,7 @@ public class ApplicationContainerController {
 
     public void loadEvent(ActionEvent e) {
         if (this.processor == null) {
-//            FileChooser fileChooser = new FileChooser();
-//            fileChooser.setTitle("Load");
-            controller.FileChooser chooser = new SimpleFileChooser();
+            FileChooser chooser = new SimpleFileChooser();
 
             Optional<File> fileToLoad = chooser.load();
             // fileChooser.showOpenDialog(this.mainWindow);
