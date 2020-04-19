@@ -3,7 +3,6 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +28,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
@@ -115,18 +115,24 @@ public class ApplicationContainerController {
 
     public void saveEvent(ActionEvent e) {
         if (this.processor == null) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save");
-            File fileToSave = fileChooser.showSaveDialog(mainWindow);
-
-            if (fileToSave != null) {
-                RecordWriter writer = new RecordWriter(fileToSave, records);
-                try {
-                    writer.write();
-                } catch (IOException | ParserConfigurationException | TransformerException ex) {
-                    ex.printStackTrace();
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Save");
+            FileChooser chooser = new SimpleFileChooser();
+            try {
+                Optional<File> fileToSave = chooser.save("default");
+                if (fileToSave.isPresent()) {
+                    RecordWriter writer = new RecordWriter(fileToSave.get(), records);
+                    try {
+                        writer.write();
+                    } catch (IOException | ParserConfigurationException | TransformerException ex) {
+                        ex.printStackTrace();
+                    }
                 }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
+
+
         } else {
             new Alert(Alert.AlertType.ERROR, "Can't perform action");
         }
@@ -134,15 +140,17 @@ public class ApplicationContainerController {
 
     public void loadEvent(ActionEvent e) {
         if (this.processor == null) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Load");
+//            FileChooser fileChooser = new FileChooser();
+//            fileChooser.setTitle("Load");
+            controller.FileChooser chooser = new SimpleFileChooser();
 
-            File fileToLoad = fileChooser.showOpenDialog(this.mainWindow);
+            Optional<File> fileToLoad = chooser.load();
+            // fileChooser.showOpenDialog(this.mainWindow);
 
-            if (fileToLoad != null) {
+            if (fileToLoad.isPresent()) {
                 RecordReader loader = new RecordReader();
                 try {
-                    SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad, loader);
+                    SAXParserFactory.newInstance().newSAXParser().parse(fileToLoad.get(), loader);
 
                     this.records.clear();
                     this.records.addAll(loader.getRecords());
