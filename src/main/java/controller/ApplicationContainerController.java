@@ -116,25 +116,19 @@ public class ApplicationContainerController {
     }
 
     public void saveEvent(ActionEvent e) {
-        if (this.processor == null) {
-            FileChooser chooser = new SimpleFileChooser();
-            try {
-                Optional<File> fileToSave = chooser.save("default");
-                if (fileToSave.isPresent()) {
-                    RecordWriter writer = new RecordWriter(fileToSave.get(), records);
-                    try {
-                        writer.write();
-                    } catch (IOException | ParserConfigurationException | TransformerException ex) {
-                        ex.printStackTrace();
-                    }
+        FileChooser chooser = new SimpleFileChooser();
+        try {
+            Optional<File> fileToSave = chooser.save();
+            if (fileToSave.isPresent()) {
+                RecordWriter writer = new RecordWriter(fileToSave.get(), records);
+                try {
+                    writer.write();
+                } catch (IOException | ParserConfigurationException | TransformerException ex) {
+                    ex.printStackTrace();
                 }
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
             }
-
-
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Can't perform action");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
     }
 
